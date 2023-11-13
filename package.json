@@ -1,0 +1,31 @@
+{
+  "name": "ruyiserver",
+  "version": "1.0.0",
+  "description": "如意平台服务器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec babel-node index.js",
+    "start": "nodemon index.js"
+  },
+  "author": "linghucong1998",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "bcryptjs": "^2.4.3",
+    "koa": "^2.14.2",
+    "koa-body": "^6.0.1",
+    "koa-bodyparser": "^4.4.1",
+    "koa-ejs": "^4.3.0",
+    "koa-router": "^11.0.2",
+    "koa-static": "^5.0.0",
+    "koa-views": "^8.1.0",
+    "koa2-cors": "^2.0.6",
+    "mongoose": "^7.6.3",
+    "node-schedule": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.22.19",
+    "nodemon": "^3.0.1"
+  }
+}
