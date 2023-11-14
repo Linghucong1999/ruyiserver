@@ -8,17 +8,31 @@ module.exports = app => ({
 
     async createUser(username, password, email, name) {
         const { $model } = app;
+        await $model.user.create({
+            username: username,
+            password: password,
+            email: email,
+            name: name || username
+        })
+        const query = { username: { $in: username } };
+        return $model.user.findOne(query, selectUserKey).exec();
 
-        try {
-            await $model.user.create({
-                username: username,
-                password: password,
-                email: email,
-                name: name || username
-            })
-            const query = { username: { $in: username } };
-        } catch (err) {
+    },
 
+    /**
+     * 根据用户名查找用户
+     * @param username
+     * @returns {Promise<void>}
+     */
+
+    async getUsersByUsername(username) {
+        const { $model } = app;
+        if (username.length === 0) {
+            return null;
         }
+
+        const query = { username: { $in: username } };
+
+        return $model.user.findOne(query).select('password').exec();
     }
 })
