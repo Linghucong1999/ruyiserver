@@ -12,7 +12,7 @@ function scanFilesByFolder(dir, cb) {
     }
 
     try {
-       const files = fs.readdirSync(_folder);
+        const files = fs.readdirSync(_folder);
         files.forEach(file => {
             let filename = file.replace('.js', '');
             let oFileCnt = require(_folder + '/' + filename);
@@ -66,8 +66,8 @@ const initController = function (app) {
 //初始化服务
 function initService(app) {
     const service = {};
-    scanFilesByFolder('../service', (filename, service) => {
-        service[filename] = service(app);
+    scanFilesByFolder('../service', (filename, servicelist) => {
+        service[filename] = servicelist(app);
     })
     return service;
 }
@@ -91,10 +91,18 @@ function initModel(app) {
     return models;
 }
 
+//初始化扩展
+function initExtend(app) {
+    scanFilesByFolder('../extend', (filename, extend) => {
+        app['$' + filename] = Object.assign(app['$' + filename] || {}, extend(app));
+    })
+}
+
 module.exports = {
     initConfig,
     initRouter,
     initController,
     initService,
     initModel,
+    initExtend,
 }
