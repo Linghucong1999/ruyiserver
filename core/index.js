@@ -4,7 +4,7 @@
 
 const path = require('path');
 const Koa = require('koa');
-const { initConfig, initController, initService, initModel, initRouter,initExtend } = require('./loader');
+const { initConfig, initController, initService, initModel, initRouter, initExtend } = require('./loader');
 
 class Application {
     constructor() {
@@ -19,11 +19,14 @@ class Application {
         this.$service = initService(this);
         //初始化控制器
         this.$controller = initController(this);
-        
+
         //初始化model
         this.$model = initModel(this);
         //初始化路由
         this.$router = initRouter(this);
+
+        //初始化扩展
+        initExtend(this);
 
 
 
@@ -38,7 +41,7 @@ class Application {
     //设置内置中间件
     initDefaultMiddleware() {
         const koaStatic = require('koa-static');
-        const {koaBody} = require('koa-body');
+        const { koaBody } = require('koa-body');
         const cors = require('koa2-cors');
         const views = require('koa-views');
 
