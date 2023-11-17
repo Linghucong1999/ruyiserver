@@ -33,6 +33,20 @@ module.exports = app => ({
 
         const query = { username: { $in: username } };
 
+        return $model.user.findOne(query, selectUserKey).exec();
+    },
+
+    /**
+     * 根据用户名查找用户对比
+     * @param username
+     * @returns {Promise<void>}
+     */
+    async getUsersByUsernameCompare(username) {
+        const { $model } = app;
+        if (username.length === 0) {
+            return null;
+        }
+        const query = { username: { $in: username } };
         return $model.user.findOne(query).select('password').exec();
     }
 })
