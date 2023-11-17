@@ -7,5 +7,6 @@ module.exports = {
     middleware: ['handlerError'],
     jwt: { secret: 'linghucong1998' },
     crypto: { secret: '#*#*linghucong1998*#*#' },
+    bcrypt: { saltRounds: 10 },
     baseUrl: ''
 }
