@@ -48,5 +48,20 @@ module.exports = app => ({
         }
         const query = { username: { $in: username } };
         return $model.user.findOne(query).select('password').exec();
+    },
+
+
+    /**
+     * 根据关键字，获取一组用户
+     * Callback:
+     * - err,数据库异常
+     * - users, 用户列表
+     * @param {Object} query 关键字
+     * @param {Object} opt 选项
+     * @return {Promise[users]} 承载用户列表的Promise对象
+     */
+    async getUsersByQuery(query) {
+        const { $model } = app;
+        return $model.user.find(query, '', selectUserKey).exec();
     }
 })
