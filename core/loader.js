@@ -98,6 +98,14 @@ function initExtend(app) {
     })
 }
 
+//初始化中间件middleware
+function initMiddleware(app) {
+    let middleware = {};
+    scanFilesByFolder('../middleware',(filename, middlewareconfig)=>{
+        
+    })
+}
+
 module.exports = {
     initConfig,
     initRouter,
