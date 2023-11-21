@@ -4,7 +4,7 @@
 
 const path = require('path');
 const Koa = require('koa');
-const { initConfig, initController, initService, initModel, initRouter, initExtend } = require('./loader');
+const { initConfig, initController, initService, initModel, initRouter, initExtend, initMiddleware } = require('./loader');
 
 class Application {
     constructor() {
@@ -19,6 +19,9 @@ class Application {
         this.$service = initService(this);
         //初始化控制器
         this.$controller = initController(this);
+
+        //初始化中间件
+        this.$middleware = initMiddleware(this);
 
         //初始化model
         this.$model = initModel(this);

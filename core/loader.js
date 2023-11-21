@@ -101,9 +101,18 @@ function initExtend(app) {
 //初始化中间件middleware
 function initMiddleware(app) {
     let middleware = {};
-    scanFilesByFolder('../middleware',(filename, middlewareconfig)=>{
-        
+    scanFilesByFolder('../middleware', (filename, middlewareconfig) => {
+        middleware[filename] = middlewareconfig(app);
     })
+
+    //初始化配置中间件,在config中的配置项，让他时时刻刻都在启动校验
+    if (app.$config.middleware && Array.isArray(app.$config.middleware)) {
+        app.$config.middleware.forEach(item => {
+            app.$app.use(middleware[item]);
+        })
+    }
+
+    return middleware;
 }
 
 module.exports = {
@@ -113,4 +122,5 @@ module.exports = {
     initService,
     initModel,
     initExtend,
+    initMiddleware,
 }
