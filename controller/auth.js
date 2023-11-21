@@ -46,6 +46,9 @@ module.exports = app => ({
         } else if (password.length < 6 || password.length > 12) {
             $helper.returnBody(false, {}, "密码长度为6-12位");
             return;
+        } else if (!email) {
+            $helper.returnBody(false, {}, "邮箱不能为空");
+            return
         }
 
         //验证是否已注册
