@@ -51,7 +51,7 @@ module.exports = app => ({
      * 检测目录是否存在，不存在就创建一个新目录
      */
     async dirExists(dir) {
-        let { $helper } = app;
+        let { helper } = app;
         let isExists = await getStat(dir);
         //如果路径存在，且不是文件，返回true
         if (isExists && isExists.isDirectory()) {
@@ -63,7 +63,7 @@ module.exports = app => ({
         //如果路径不存在
         let tempDir = path.parse(dir).dir;    //拿到上级路径
         //递归判断，如果上级目录不存在，则代码会在此处继续循环执行，直到目录存在为止，没有的目录都会一直创建
-        let status = await $helper.dirExists(tempDir);
+        let status = await helper.dirExists(tempDir);
         let mkdirStatus;
         if (status) mkdirStatus = await mkdir(dir);
         return mkdirStatus;
