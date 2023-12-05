@@ -1,4 +1,6 @@
-let selectUserKey = { _id: 0, password: 0 };
+const { mode } = require("crypto-js");
+
+let selectUserKey = { password: 0 };
 module.exports = app => ({
     /**
      * 新增用户
@@ -7,15 +9,15 @@ module.exports = app => ({
      */
 
     async createUser(username, password, email, name) {
-        const { $model } = app;
-        await $model.user.create({
+        const { model } = app;
+        await model.user.create({
             username: username,
             password: password,
             email: email,
             name: name || username
         })
         const query = { username: { $in: username } };
-        return $model.user.findOne(query, selectUserKey).exec();
+        return model.user.findOne(query, selectUserKey).exec();
 
     },
 
@@ -26,28 +28,28 @@ module.exports = app => ({
      */
 
     async getUsersByUsername(username) {
-        const { $model } = app;
+        const { model } = app;
         if (username.length === 0) {
             return null;
         }
 
         const query = { username: { $in: username } };
 
-        return $model.user.findOne(query, selectUserKey).exec();
+        return model.user.findOne(query, selectUserKey).exec();
     },
 
     /**
-     * 根据用户名查找用户对比
+     * 根据用户名查找密码
      * @param username
      * @returns {Promise<void>}
      */
-    async getUsersByUsernameCompare(username) {
-        const { $model } = app;
+    async getUsersPasswordByUsername(username) {
+        const { model } = app;
         if (username.length === 0) {
             return null;
         }
         const query = { username: { $in: username } };
-        return $model.user.findOne(query).select('password').exec();
+        return model.user.findOne(query).select('password').exec();
     },
 
 
@@ -61,7 +63,60 @@ module.exports = app => ({
      * @return {Promise[users]} 承载用户列表的Promise对象
      */
     async getUsersByQuery(query) {
-        const { $model } = app;
-        return $model.user.find(query, '', selectUserKey).exec();
+        const { model } = app;
+        return model.user.find(query, '', selectUserKey).exec();
+    },
+
+    /**
+     * 更新用户昵称
+     * @param {*} name
+     */
+    async updataUserName(name) {
+        const { ctx, model } = app;
+        const userData = await ctx.userData;
+        await model.user.findByIdAndUpdate(userData._id, { $set: { name: name } });
+        return model.user.findOne({ _id: userData._id },selectUserKey)
+    },
+
+    /**
+     * 更新密码
+     * @param {*} newPassword
+     */
+    async updataPassword(newPassword) {
+        const { ctx, model } = app;
+        const userData = await ctx.userData;
+        await model.user.findByIdAndUpdate(userData._id, { $set: { password: newPassword } });
+        return model.user.findOne({ _id: userData._id }, selectUserKey).exec();
+    },
+
+    /**
+     * 更新个人头像
+     * @param {*} url
+     */
+    async updataAvatar(url) {
+        const { ctx, model } = app;
+        const userData = await ctx.userData;
+        await model.user.findByIdAndUpdate(userData._id, { $set: { avatar: url } });
+        return model.user.findOne({ _id: userData._id }, selectUserKey).exec();
+    },
+
+    /**
+     * 关键字模糊查询
+     * 
+     */
+    async findUserByKeyword(keyword) {
+        const { model } = app;
+        return await model.user.find({
+            $or: [
+                { name: { $regex: keyword } },
+                { username: { $regex: keyword } },
+                { email: { $regex: keyword } }
+            ],
+        }, {
+            password: 0
+        }, {
+            sort: { _id: -1 },
+            limit: 20
+        })
     }
 })
