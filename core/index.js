@@ -16,15 +16,15 @@ class Application {
         //初始化cofing
         this.$config = initConfig(this);
         //初始化service
-        this.$service = initService(this);
+        this.service = initService(this);
         //初始化控制器
-        this.$controller = initController(this);
+        this.controller = initController(this);
 
         //初始化中间件
-        this.$middleware = initMiddleware(this);
+        this.middleware = initMiddleware(this);
 
         //初始化model
-        this.$model = initModel(this);
+        this.model = initModel(this);
         //初始化路由
         this.$router = initRouter(this);
 
