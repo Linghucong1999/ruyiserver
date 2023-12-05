@@ -94,7 +94,7 @@ function initModel(app) {
 //初始化扩展
 function initExtend(app) {
     scanFilesByFolder('../extend', (filename, extend) => {
-        app['$' + filename] = Object.assign(app['$' + filename] || {}, extend(app));
+        app[filename] = Object.assign(app[filename] || {}, extend(app));
     })
 }
 
