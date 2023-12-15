@@ -11,4 +11,12 @@ module.exports = app => {
     router.post('/ruyi/user/updata/avater', middleware.auth, controller.user.updataAvatar);
     router.get('/ruyi/user/getUserList', middleware.auth, controller.user.fuzzyQueryUserList);
 
+    //页面
+    router.get('/ruyi/page/getMyPages', middleware.auth, controller.page.myPageList);
+
+
+    //我的模板
+    router.get('/ruyi/template/getMyTemplates', middleware.auth, controller.page.getMyTemplateList);
+
+
 }
