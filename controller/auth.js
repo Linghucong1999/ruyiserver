@@ -38,6 +38,57 @@ module.exports = app => ({
     },
 
     /**
+     * 邮箱登录
+     * @returns {Promise<void>}
+     */
+    async loginByEmail() {
+        const { ctx, service, helper } = app;
+        const { email, code } = ctx.request.body;
+        if (!email) {
+            helper.returnBody(false, {}, '邮箱不能为空');
+            return;
+        } else if (!code) {
+            helper.returnBody(false, {}, '验证码不能为空');
+        }
+
+        let emailUser = await service.user.findUserByEmail(email);
+        if (!emailUser.email) {
+            helper.returnBody(false, {}, '邮箱未注册');
+            return;
+        }
+
+        //校验邮箱验证码是否过期
+        try {
+            const findEmailCode = await service.user.findEmailAndCode(email);
+            const startTime = findEmailCode.expire;
+            const endTime = new Date().getTime();
+            const time = endTime - startTime;
+
+            if (time >= 60 * 1000) {
+                helper.returnBody(false, {}, '验证码已过期');
+                return;
+            }
+
+            if (findEmailCode.code !== code) {
+                helper.returnBody(false, {}, '验证码错误');
+                return;
+            }
+
+
+            let userDataStr = JSON.parse(JSON.stringify(emailUser));
+
+            //生成token
+            let token = await helper.createToken(userDataStr);
+            helper.returnBody(true, { access_token: token, userInfo: emailUser }, '登录成功');
+        } catch (err) {
+            helper.returnBody(false, {}, '服务器登录出错');
+            return;
+        }
+
+
+    },
+
+    /**
      * 注册
      * @returns {Promise<void>}
      */

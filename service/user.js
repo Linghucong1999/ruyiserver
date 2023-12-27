@@ -75,7 +75,7 @@ module.exports = app => ({
         const { ctx, model } = app;
         const userData = await ctx.userData;
         await model.user.findByIdAndUpdate(userData._id, { $set: { name: name } });
-        return model.user.findOne({ _id: userData._id },selectUserKey)
+        return model.user.findOne({ _id: userData._id }, selectUserKey)
     },
 
     /**
@@ -118,5 +118,22 @@ module.exports = app => ({
             sort: { _id: -1 },
             limit: 20
         })
+    },
+
+    /**
+     * 通过查找邮箱是否存在
+     */
+    async findUserByEmail(email) {
+        const { model } = app;
+        return await model.user.findOne({ email }, selectUserKey).exec();
+    },
+
+    /**
+     * 查找邮箱以及验证码,过期时间
+     */
+
+    async findEmailAndCode(email) {
+        const { model } = app;
+        return await model.emailCode.findOne({ email }).exec();
     }
 })
