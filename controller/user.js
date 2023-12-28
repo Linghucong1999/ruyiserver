@@ -93,8 +93,8 @@ module.exports = app => ({
             return;
         }
         //smtp认证使用的邮箱账号密码
-        let username = '2865911620@aliyun.com';
-        let password = '2865911620@qq.com';
+        let username = 'your email address';
+        let password = 'your email password';
 
         //创建邮箱连接池
         let transporter = nodemailer.createTransport({
@@ -129,12 +129,16 @@ module.exports = app => ({
                 '<p style="color:#666; font-size:16px; line-height:1.5;">您的验证码为：<h2 style="font-weight: bold;color: #f00 ">' + code + '</h2></p>' +
                 '<p style="color:#666; font-size:16px; line-height:1.5;">请尽快完成注册,该验证码1分钟内有效</p> ' +
                 '<p style="color:#666; font-size:16px; line-height:1.5;">如非本人操作,请立即对你的邮箱进行验证</p>' +
-                '<div><img src="cid:001" style="width:200px;height:auto"/></div>',
+                '<div><img src="cid:002" style="width:200px;height:auto"/></div>',
             attachment: [
                 {
                     filename: 'eamilimg.jpg',
-                    path: '/public/emailImg/eamilimg.jpg',
+                    path: '../public/image/eamilimg.jpg',
                     cid: '001',
+                }, {
+                    filename: 'pikaqiu.gif',
+                    path: '../public/image/pikaqiu.gif',
+                    cid: '002'
                 }
             ]
         }
