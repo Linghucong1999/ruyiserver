@@ -93,8 +93,8 @@ module.exports = app => ({
             return;
         }
         //smtp认证使用的邮箱账号密码
-        let username = 'your email address';
-        let password = 'your email password';
+        let username = '2865911620@aliyun.com';
+        let password = '2865911620@qq.com';
 
         //创建邮箱连接池
         let transporter = nodemailer.createTransport({
