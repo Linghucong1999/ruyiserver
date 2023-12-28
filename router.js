@@ -2,6 +2,8 @@ module.exports = app => {
     const { router, controller, middleware } = app;
     //登录注册
     router.post('/ruyi/auth/login', controller.auth.login);
+    router.post('/ruyi/auth/login/email', controller.auth.loginByEmail)
+    router.post('/ruyi/auth/sendeamil/code', controller.user.sendLoginByEmailCode)
     router.post('/ruyi/auth/register', controller.auth.register);
 
     //用户

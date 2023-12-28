@@ -3,6 +3,7 @@ const path = require('path');
 const bcryptjs = require('bcryptjs');   //用户加密使用他
 const crypto = require('crypto');         //其他加密使用他
 const jwt = require('jsonwebtoken');
+const { type } = require('os');
 
 module.exports = app => ({
     /**
@@ -68,6 +69,19 @@ module.exports = app => ({
         if (status) mkdirStatus = await mkdir(dir);
         return mkdirStatus;
     },
+
+    /**
+     * 判断传入的数据是否是空值，如果是空值就返回true，非空值就是false
+     * 同时，需要判断对象的空值以及单个对象的空值
+     */
+    isEmpty(data) {
+        return (
+            data === undefined ||
+            data === null ||
+            (typeof data === 'object' && Object.keys(data).length === 0) ||
+            (typeof data === 'string' && data.trim().length === 0)
+        )
+    }
 });
 
 

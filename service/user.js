@@ -135,5 +135,36 @@ module.exports = app => ({
     async findEmailAndCode(email) {
         const { model } = app;
         return await model.emailCode.findOne({ email }).exec();
+    },
+
+    /**
+     * 用户验证码过期进行验证码的删除/重复邮箱的验证码删除
+     */
+    async deleteEmailAndCode(email) {
+        const { model } = app;
+        return await model.emailCode.deleteOne({ email });
+    },
+
+    /**
+     * 邮箱验证码的存储
+     */
+    async saveEmailAndCode(email, code) {
+        const { model, helper } = app;
+
+        try {
+            let emailCode = await model.emailCode.findOne({ email }).exec();
+            let isEmailCode = helper.isEmpty(emailCode);
+            if (!isEmailCode) {
+                await model.emailCode.deleteOne({ email });
+            }
+            let expire = new Date().getTime();
+
+            await model.emailCode.create({ email, code, expire });
+            return true;
+        } catch (err) {
+            return false;
+        }
     }
+
+
 })

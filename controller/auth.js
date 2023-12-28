@@ -60,19 +60,27 @@ module.exports = app => ({
         //校验邮箱验证码是否过期
         try {
             const findEmailCode = await service.user.findEmailAndCode(email);
-            const startTime = findEmailCode.expire;
+            const isfindEmailCode = helper.isEmpty(findEmailCode);
+            if (isfindEmailCode) {
+                helper.returnBody(false, {}, '验证码已过期,请重新发送');
+                return;
+            }
+
+            const startTime = new Date(findEmailCode.expire).getTime();
             const endTime = new Date().getTime();
             const time = endTime - startTime;
 
-            if (time >= 60 * 1000) {
-                helper.returnBody(false, {}, '验证码已过期');
-                return;
-            }
 
             if (findEmailCode.code !== code) {
                 helper.returnBody(false, {}, '验证码错误');
                 return;
+            } else if (time >= 60 * 1000) {
+                helper.returnBody(false, {}, '验证码已过期');
+                //过期就删除数据库里的验证码集合
+                await service.user.deleteEmailAndCode(email);
+                return;
             }
+
 
 
             let userDataStr = JSON.parse(JSON.stringify(emailUser));
@@ -80,6 +88,8 @@ module.exports = app => ({
             //生成token
             let token = await helper.createToken(userDataStr);
             helper.returnBody(true, { access_token: token, userInfo: emailUser }, '登录成功');
+            //登录成功删除验证码
+            await service.user.deleteEmailAndCode(email);
         } catch (err) {
             helper.returnBody(false, {}, '服务器登录出错');
             return;
