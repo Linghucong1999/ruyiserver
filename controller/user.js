@@ -149,7 +149,8 @@ module.exports = app => ({
             let saveCode = await service.user.saveEmailAndCode(email, code);
 
             if (saveCode) {
-                helper.returnBody(true, { '验证码': code }, '验证码发送成功');
+                helper.returnBody(true, { }, '验证码发送成功');
+                console.log('验证码发送成功');
             } else {
                 helper.returnBody(false, {}, '验证码存储失败');
             }
