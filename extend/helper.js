@@ -27,7 +27,7 @@ module.exports = app => ({
     //生成token
     async createToken(data) {
         let { $config } = app;
-        return await jwt.sign(data, $config.jwt.secret, { expiresIn: 30 * 24 * 60 * 60 + 's' });
+        return await jwt.sign(data, $config.jwt.secret, { expiresIn: '1d' });
     },
 
     //验证token
