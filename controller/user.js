@@ -200,5 +200,22 @@ module.exports = app => ({
             helper.returnBody(false, {}, '服务器出错');
             return;
         }
+    },
+
+    /**
+     * 通过邮箱和验证码验证后,用户进行重置密码
+     */
+    async userResetPassword() {
+        const { ctx, service, helper } = app;
+
+        const { newPassword, reconPassword } = ctx.request.body;
+        if (newPassword !== reconPassword) {
+            helper.returnBody(false, '更改输入的两次密码不一致');
+            return;
+        }
+
+        const password = await helper.createPassword(newPassword);
+        const user = await service.user.updataPassword(password);
+        helper.returnBody(true, '密码重置成功');
     }
 })

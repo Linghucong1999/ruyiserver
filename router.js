@@ -14,7 +14,10 @@ module.exports = app => {
     router.get('/ruyi/user/getUserList', middleware.auth, controller.user.fuzzyQueryUserList);
 
     //用户未登录前的重置密码步骤
-    router.post('/ruyi/email/password/reset/first',controller.user.resetPasswordFirstStep);
+    router.post('/ruyi/email/password/reset/first', controller.user.resetPasswordFirstStep);
+
+    //通过邮箱后重置密码
+    router.post('/ruyi/email/password/reset/second', middleware.auth, controller.user.userResetPassword);
 
     //页面
     router.get('/ruyi/page/getMyPages', middleware.auth, controller.page.myPageList);
