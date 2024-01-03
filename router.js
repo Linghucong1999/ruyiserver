@@ -13,6 +13,9 @@ module.exports = app => {
     router.post('/ruyi/user/updata/avater', middleware.auth, controller.user.updataAvatar);
     router.get('/ruyi/user/getUserList', middleware.auth, controller.user.fuzzyQueryUserList);
 
+    //用户未登录前的重置密码步骤
+    router.post('/ruyi/email/password/reset/first',controller.user.resetPasswordFirstStep);
+
     //页面
     router.get('/ruyi/page/getMyPages', middleware.auth, controller.page.myPageList);
 
