@@ -149,12 +149,56 @@ module.exports = app => ({
             let saveCode = await service.user.saveEmailAndCode(email, code);
 
             if (saveCode) {
-                helper.returnBody(true, { }, '验证码发送成功');
+                helper.returnBody(true, {}, '验证码发送成功');
                 console.log('验证码发送成功');
             } else {
                 helper.returnBody(false, {}, '验证码存储失败');
             }
         }
 
+    },
+
+    /**
+     * 通过邮箱重置密码第一步，验证邮箱以及验证验证码是否过期
+     */
+    async resetPasswordFirstStep() {
+        const { ctx, service, helper } = app;
+        const { email, code } = ctx.request.body;
+        const findEmailAndCode = await service.user.findEmailAndCode(email);
+        const isFindEmailCode = helper.isEmpty(findEmailAndCode);
+        if (isFindEmailCode) {
+            helper.returnBody(false, {}, '验证码已过期,请重新发送');
+            return;
+        }
+
+        const startTime = new Date(findEmailAndCode.expire).getTime();
+        const endTime = new Date().getTime();
+        const time = endTime - startTime;
+
+
+        if (findEmailAndCode.code !== code) {
+            helper.returnBody(false, {}, '验证码错误');
+            return;
+        } else if (time >= 60 * 1000) {
+            helper.returnBody(false, {}, '验证码已过期');
+            //过期就删除数据库里的验证码集合
+            await service.user.deleteEmailAndCode(email);
+            return;
+        }
+
+        try {
+            let emailUser = await service.user.findUserByEmail(email);
+            let userDataStr = JSON.parse(JSON.stringify(emailUser));
+
+            //生成token
+            let token = await helper.createToken(userDataStr);
+            helper.returnBody(true, { access_token: token });
+
+            //删除验证码
+            await service.user.deleteEmailAndCode(email);
+        } catch (err) {
+            helper.returnBody(false, {}, '服务器出错');
+            return;
+        }
     }
 })
