@@ -23,7 +23,7 @@ module.exports = app => {
         }
 
         if (!user) {
-            helper.returnBody(false, {}, 'Token 无效,请重新登录', 401);
+            helper.returnBody(false, {}, '身份过期,请重新登录', 401);
             return;
         }
 
