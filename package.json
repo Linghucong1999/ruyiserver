@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node index.js",
-    "start": "nodemon index.js"
+    "start": "pm2 start index.js --name ruyiserver --watch",
+    "stop": "pm2 stop ruyiserver"
   },
   "author": "linghucong1998",
   "license": "ISC",
