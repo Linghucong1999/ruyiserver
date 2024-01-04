@@ -13,5 +13,6 @@ module.exports = {
       "node_modules",
       "logs"
     ],
+    windowsHide: true,
   }]
 }
