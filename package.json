@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node index.js",
     "start": "pm2 start index.js --name ruyiserver --watch",
-    "stop": "pm2 stop ruyiserver"
+    "stop": "pm2 stop ruyiserver",
+    "monit": "pm2 monit",
+    "plus": "pm2 plus"
   },
   "author": "linghucong1998",
   "license": "ISC",
