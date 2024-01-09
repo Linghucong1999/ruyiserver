@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node index.js",
-    "start": "pm2 start index.js --name ruyiserver --watch",
-    "stop": "pm2 stop ruyiserver",
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop all",
     "monit": "pm2 monit",
     "plus": "pm2 plus"
   },
