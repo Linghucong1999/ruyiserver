@@ -216,6 +216,6 @@ module.exports = app => ({
 
         const password = await helper.createPassword(newPassword);
         const user = await service.user.updataPassword(password);
-        helper.returnBody(true, '密码重置成功');
+        helper.returnBody(true, '密码重置成功','密码重置成功');
     }
 })
