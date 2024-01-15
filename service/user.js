@@ -22,6 +22,17 @@ module.exports = app => ({
     },
 
     /**
+     * 通过_id获取用户信息
+     * @param id
+     */
+    async getUserById(id) {
+        const { model } = app;
+        const query = { _id: id };
+        return model.user.findOne(query, selectUserKey).exec();
+    },
+
+
+    /**
      * 根据用户名查找用户
      * @param username
      * @returns {Promise<void>}
