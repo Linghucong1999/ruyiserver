@@ -41,7 +41,7 @@ module.exports = app => ({
         const verifyPassword = await helper.verifyPassword(oldPassword, userCurrentPassword.password);
 
         if (!verifyPassword) {
-            helper.returnBody(false, '原密码错误');
+            helper.returnBody(false, {}, '原密码错误');
             return;
         }
 
