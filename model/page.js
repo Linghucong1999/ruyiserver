@@ -20,7 +20,7 @@ module.exports = app => {
         },
         width: { type: Number, default: 375 },    //页面宽
         height: { type: Number, default: 617 },   //页面高
-        pageMode: { type: String, default: 'h5' },    //渲染模式
+        pageMode: { type: String, default: 'H5' },    //渲染模式
         flipType: { type: Number, default: 0 },   //翻页模式
         slideNumber: { type: Boolean, default: false },   //翻页是否显示页码翻页指示
         add_time: Number,
