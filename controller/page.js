@@ -17,9 +17,9 @@ module.exports = app => ({
      */
     async createPage() {
         const { ctx, service, helper } = app;
-        let newPageData=ctx.request.body;
-        const page=await service.page.createPage(newPageData);
-        helper.returnBody(true,page);
+        let newPageData = ctx.request.body;
+        const page = await service.page.createPage(newPageData);
+        helper.returnBody(true, page);
     },
 
     /**
