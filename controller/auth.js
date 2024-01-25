@@ -154,9 +154,23 @@ module.exports = app => ({
         const key = new NodeRSA({ b: 512 });
         const publicKey = key.exportKey('public');
         const privateKey = key.exportKey('private');
-        const savePublicKeyPath = path.resolve(__dirname, '../RSA/publicKey.pem');
-        const savePrivateKeyPath = path.resolve(__dirname, '../RSA/privateKey.pem');
-        
+        // const savePublicKeyPath = path.resolve(__dirname, '../RSA/publicKey.pem');
+        // const savePrivateKeyPath = path.resolve(__dirname, '../RSA/privateKey.pem');
+
         helper.returnBody(true, { publicKey });
     },
+
+    /**
+     * 测试RSA解密
+     */
+    testRSA() {
+        const { ctx, helper } = app;
+        const { publicKey, data } = ctx.request.body;
+        // const key = new NodeRSA({ b: 512 });
+        // const privateKey = key.exportKey('private');
+        // const rsa = new NodeRSA(privateKey);
+        // rsa.importKey(publicKey, 'public');
+        // const decrydata = rsa.decrypt(data, 'base64');
+        // helper.returnBody(true, { decrydata });
+    }
 })

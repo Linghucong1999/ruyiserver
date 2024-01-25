@@ -3,6 +3,8 @@ module.exports = app => {
 
     //发送公钥
     router.get('/ruyi/auth/public/login', controller.auth.getPublicKey);
+    //测试RSA解密
+    router.post('/ruyi/auth/test/rsa', controller.auth.testRSA);
 
     //登录注册
     router.post('/ruyi/auth/login', controller.auth.login);
