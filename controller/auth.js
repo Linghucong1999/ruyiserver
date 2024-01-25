@@ -1,3 +1,7 @@
+const NodeRSA = require('node-rsa');
+const fs = require('fs');
+const path = require('path');
+const helper = require('../extend/helper');
 module.exports = app => ({
     /**
      * 登录
@@ -139,5 +143,20 @@ module.exports = app => ({
         //token
         let token = await helper.createToken(userDataStr);
         helper.returnBody(true, { access_token: token, userInfo: userDataStr }, '注册成功!');
-    }
+    },
+
+    /**
+     * 返回给前端的RSA公钥
+     * @return {*} publicKey:公钥;privateKey:私钥
+     */
+    getPublicKey() {
+        const { helper } = app;
+        const key = new NodeRSA({ b: 512 });
+        const publicKey = key.exportKey('public');
+        const privateKey = key.exportKey('private');
+        const savePublicKeyPath = path.resolve(__dirname, '../RSA/publicKey.pem');
+        const savePrivateKeyPath = path.resolve(__dirname, '../RSA/privateKey.pem');
+        
+        helper.returnBody(true, { publicKey });
+    },
 })
