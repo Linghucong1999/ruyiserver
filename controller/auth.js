@@ -152,10 +152,8 @@ module.exports = app => ({
     getPublicKey() {
         const { helper } = app;
         const key = new NodeRSA({ b: 512 });
-        const publicKey = key.exportKey('public');
-        const privateKey = key.exportKey('private');
-        // const savePublicKeyPath = path.resolve(__dirname, '../RSA/publicKey.pem');
-        // const savePrivateKeyPath = path.resolve(__dirname, '../RSA/privateKey.pem');
+        key.setOptions({ encryptionScheme: 'pkcs1' });
+        const publicKey = key.exportKey();
 
         helper.returnBody(true, { publicKey });
     },
