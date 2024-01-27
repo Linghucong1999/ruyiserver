@@ -2,7 +2,7 @@ module.exports = app => {
     const { router, controller, middleware } = app;
 
     //发送公钥
-    router.get('/ruyi/auth/public/login', controller.auth.getPublicKey);
+    router.get('/ruyi/auth/rsa/login/key', controller.auth.getPublicKey);
     //测试RSA解密
     router.post('/ruyi/auth/test/rsa', controller.auth.testRSA);
 

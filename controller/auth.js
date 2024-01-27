@@ -1,7 +1,3 @@
-const NodeRSA = require('node-rsa');
-const fs = require('fs');
-const path = require('path');
-const helper = require('../extend/helper');
 module.exports = app => ({
     /**
      * 登录
@@ -20,8 +16,11 @@ module.exports = app => ({
 
         //校验密码
         try {
+            // 数据解密
+            const decryptPassword = await helper.decryptData(password);
+
             const userCurrentPassword = await service.user.getUsersPasswordByUsername(username);
-            const verifyPass = await helper.verifyPassword(password, userCurrentPassword.password);
+            const verifyPass = await helper.verifyPassword(decryptPassword, userCurrentPassword.password);
             if (!verifyPass) {
                 helper.returnBody(false, '', "密码错误，请重试!");
                 return;
@@ -135,7 +134,9 @@ module.exports = app => ({
             return;
         }
 
-        let pass = await helper.createPassword(password);
+        let decryptPassword = await helper.decryptData(password);
+
+        let pass = await helper.createPassword(decryptPassword);
         let userData = await service.user.createUser(username, pass, email);
         userData = userData.toObject();
         let userDataStr = JSON.parse(JSON.stringify(userData)); //防止被篡改
@@ -149,13 +150,15 @@ module.exports = app => ({
      * 返回给前端的RSA公钥
      * @return {*} publicKey:公钥;privateKey:私钥
      */
-    getPublicKey() {
+    async getPublicKey() {
         const { helper } = app;
-        const key = new NodeRSA({ b: 512 });
-        key.setOptions({ encryptionScheme: 'pkcs1' });
-        const publicKey = key.exportKey();
+        try {
+            const publicKey = await helper.generatePublicKey()
+            helper.returnBody(true, { publicKey }, '获取成功!');
+        } catch (err) {
+            helper.returnBody(false, {}, '获取公钥失败');
+        }
 
-        helper.returnBody(true, { publicKey });
     },
 
     /**
@@ -164,11 +167,5 @@ module.exports = app => ({
     testRSA() {
         const { ctx, helper } = app;
         const { publicKey, data } = ctx.request.body;
-        // const key = new NodeRSA({ b: 512 });
-        // const privateKey = key.exportKey('private');
-        // const rsa = new NodeRSA(privateKey);
-        // rsa.importKey(publicKey, 'public');
-        // const decrydata = rsa.decrypt(data, 'base64');
-        // helper.returnBody(true, { decrydata });
     }
 })

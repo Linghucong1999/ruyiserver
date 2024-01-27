@@ -3,6 +3,7 @@ const fs = require('fs');
 const Router = require('koa-router');
 const schedule = require('node-schedule');
 const mongoose = require('mongoose');
+const NodeRSA = require('node-rsa');
 
 //自动扫描指定目录下面的文件并且加载
 function scanFilesByFolder(dir, cb) {
@@ -115,6 +116,16 @@ function initMiddleware(app) {
     return middleware;
 }
 
+// 生成RSA私钥
+function generateRsaKeyPair() {
+    const key = new NodeRSA({ b: 1024 });
+    key.setOptions({ encryptionScheme: 'pkcs1' });
+    const privateKey = key.exportKey('pkcs1-private');
+    const privateKeyPath = path.join(__dirname, '../RSA/private.pem');
+    fs.writeFileSync(privateKeyPath, privateKey, 'utf8');
+}
+
+
 module.exports = {
     initConfig,
     initRouter,
@@ -123,4 +134,5 @@ module.exports = {
     initModel,
     initExtend,
     initMiddleware,
+    generateRsaKeyPair,
 }

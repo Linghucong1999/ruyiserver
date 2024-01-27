@@ -4,7 +4,7 @@
 
 const path = require('path');
 const Koa = require('koa');
-const { initConfig, initController, initService, initModel, initRouter, initExtend, initMiddleware } = require('./loader');
+const { initConfig, initController, initService, initModel, initRouter, initExtend, initMiddleware, generateRsaKeyPair } = require('./loader');
 
 class Application {
     constructor() {
@@ -72,8 +72,10 @@ class Application {
         }))
     }
 
-    //启动服务
     start(port) {
+        //RSA私钥生成
+        generateRsaKeyPair();
+        //启动服务
         this.$app.listen(port, () => {
             console.log(`服务器开启:http://127.0.0.1:${port}`);
         })

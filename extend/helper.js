@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const bcryptjs = require('bcryptjs');   //用户加密使用他
-const crypto = require('crypto');         //其他加密使用他
 const jwt = require('jsonwebtoken');
-const { type } = require('os');
+const NodeRSA = require('node-rsa');
 
 module.exports = app => ({
     /**
@@ -81,7 +80,34 @@ module.exports = app => ({
             (typeof data === 'object' && Object.keys(data).length === 0) ||
             (typeof data === 'string' && data.trim().length === 0)
         )
+    },
+
+    /**
+     * 生成公钥
+     * @return {String} publicKey
+     */
+    async generatePublicKey() {
+        const privateKey = getPrivateKey();
+        const key = new NodeRSA(privateKey);
+        key.setOptions({ encryptionScheme: 'pkcs1' });
+        const publicKey = key.exportKey('pkcs1-public');
+        return publicKey;
+    },
+
+    /**
+     * 数据解密
+     * @return {*}
+     */
+    async decryptData(data, publicKey) {
+        const privateKey = getPrivateKey();
+        const key = new NodeRSA(privateKey, { encryptionScheme: 'pkcs1' });
+        const decryptedData = key.decrypt(data, 'utf8');
+        return decryptedData;
+
     }
+
+
+
 });
 
 
@@ -116,4 +142,13 @@ function mkdir(dir) {
             }
         })
     })
+}
+
+/**
+ * 获取私钥
+ */
+function getPrivateKey() {
+    const privateKeyPath = path.join(__dirname, '../RSA/private.pem');
+    const privateKey = fs.readFileSync(privateKeyPath, 'utf8');
+    return privateKey;
 }
