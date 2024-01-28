@@ -32,20 +32,24 @@ module.exports = app => ({
         const userData = ctx.userData;
         const { oldPassword, newPassword, reconPassword } = ctx.request.body;
 
-        if (newPassword !== reconPassword) {
+        const decryptOldPassword = await helper.decryptData(oldPassword);
+        const decryptNewPassword = await helper.decryptData(newPassword);
+        const decryptReconPassword = await helper.decryptData(reconPassword);
+
+        if (decryptNewPassword !== decryptReconPassword) {
             helper.returnBody(false, '更改输入的两次密码不一致');
             return;
         }
 
         const userCurrentPassword = await service.user.getUsersPasswordByUsername(userData.username);
-        const verifyPassword = await helper.verifyPassword(oldPassword, userCurrentPassword.password);
+        const verifyPassword = await helper.verifyPassword(decryptOldPassword, userCurrentPassword.password);
 
         if (!verifyPassword) {
             helper.returnBody(false, {}, '原密码错误');
             return;
         }
 
-        const password = await helper.createPassword(newPassword);
+        const password = await helper.createPassword(decryptNewPassword);
         const user = await service.user.updataPassword(password);
         helper.returnBody(true, user);
     },
@@ -210,12 +214,14 @@ module.exports = app => ({
         const { ctx, service, helper } = app;
 
         const { newPassword, reconPassword } = ctx.request.body;
-        if (newPassword !== reconPassword) {
+        const decryptNewPassword = await helper.decryptData(newPassword);
+        const decryptReconPassword = await helper.decryptData(reconPassword);
+        if (decryptNewPassword !== decryptReconPassword) {
             helper.returnBody(false, '更改输入的两次密码不一致');
             return;
         }
 
-        const password = await helper.createPassword(newPassword);
+        const password = await helper.createPassword(decryptNewPassword);
         const user = await service.user.updataPassword(password);
         helper.returnBody(true, '密码重置成功', '密码重置成功');
     }
