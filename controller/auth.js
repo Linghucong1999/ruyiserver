@@ -26,7 +26,7 @@ module.exports = app => ({
                 return;
             }
         } catch (err) {
-            helper.returnBody(false, '', err);
+            helper.returnBody(false, '', '解密出错');
             return;
         }
 

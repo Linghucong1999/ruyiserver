@@ -28,6 +28,7 @@ module.exports = app => {
     //页面
     router.get('/ruyi/page/getMyPages', middleware.auth, controller.page.myPageList);
     router.post('/ruyi/page/create', middleware.auth, controller.page.createPage);
+    router.get('/ruyi/page/getPageDetail', middleware.auth, controller.page.getPageDetail)
 
 
     //我的模板

@@ -24,12 +24,23 @@ module.exports = app => ({
 
     /**
      * 我的模板列表
-     * @returns {Promise<void>}
+     * 
      */
     async getMyTemplateList() {
         const { ctx, service, helper } = app;
         let { pageMode } = ctx.request.query;
         const myTemplateList = await service.page.getMyTemplates(pageMode);
         helper.returnBody(true, { page: myTemplateList });
+    },
+
+    /**
+     * 获取页面详情
+     */
+    async getPageDetail() {
+        const { ctx, service, helper } = app;
+        const { pageId } = ctx.request.query;
+        const pageDetail = await service.page.getPageDetail(pageId);
+        helper.returnBody(true, pageDetail);
     }
+
 })
