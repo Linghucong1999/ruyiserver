@@ -17,13 +17,30 @@ module.exports = app => ({
         try {
             const file = ctx.request.files.file;
             const psd = await PSD.open(file.filepath);
-            const timeStr = new Date();
+            const timeStr = new Date().getTime();
             const descendantsList = psd.tree().descendants();
             descendantsList.reverse();
-            const psdSourceList = [];
+            let psdSourceList = [];
             const currentPathDir = `/resource/upload_psd/${timeStr}`;
-
-            // 判断文件夹是否存在,不存在就创建一个新的
+            await helper.dirExists(path.join(__dirname, '../public' + currentPathDir));
+            // 批量保存图片并行处理
+            await Promise.all(descendantsList.map(async (layer, i) => {
+                if (layer.isGroup() || !layer.visible) return;
+                try {
+                    await layer.saveAsPng(path.join(__dirname, '../public' + currentPathDir + `/${i}.png`));
+                    psdSourceList.push({
+                        ...layer.export(),
+                        type: 'picture',
+                        imageSrc: ($config.baseUrl || '') + `${currentPathDir}/${i}.png`,
+                    });
+                } catch (err) {
+                    console.error(`图层${i}保存失败: ${err}`);
+                }
+            }));
+            helper.returnBody(true, {
+                elements: psdSourceList,
+                document: psd.tree().export()
+            }, '解析成功');
         } catch (err) {
             console.log('psd上传失败...' + err);
         }
