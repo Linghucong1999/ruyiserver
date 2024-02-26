@@ -1,7 +1,7 @@
 node_modules
 RSA
 package-lock.json
-private.pem
 yarn.lock
 public/resource
 yarn-error.log
+resource

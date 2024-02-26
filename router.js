@@ -3,13 +3,11 @@ module.exports = app => {
 
     //发送公钥
     router.get('/ruyi/auth/rsa/login/key', controller.auth.getPublicKey);
-    //测试RSA解密
-    router.post('/ruyi/auth/test/rsa', controller.auth.testRSA);
 
     //登录注册
     router.post('/ruyi/auth/login', controller.auth.login);
-    router.post('/ruyi/auth/login/email', controller.auth.loginByEmail)
-    router.post('/ruyi/auth/send/email/code', controller.user.sendLoginByEmailCode)
+    router.post('/ruyi/auth/login/email', controller.auth.loginByEmail);
+    router.post('/ruyi/auth/send/email/code', controller.user.sendLoginByEmailCode);
     router.post('/ruyi/auth/register', controller.auth.register);
 
     //用户
@@ -33,6 +31,9 @@ module.exports = app => {
 
     //我的模板
     router.get('/ruyi/template/getMyTemplates', middleware.auth, controller.page.getMyTemplateList);
+
+    // 上传psd文件
+    router.post('/ruyi/psd/upload', controller.psd.psdUpload);
 
 
 }

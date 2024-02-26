@@ -103,8 +103,7 @@ module.exports = app => ({
         const key = new NodeRSA(privateKey, { encryptionScheme: 'pkcs1' });
         const decryptedData = key.decrypt(data, 'utf8');
         return decryptedData;
-
-    }
+    },
 
 
 

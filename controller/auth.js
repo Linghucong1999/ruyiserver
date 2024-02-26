@@ -158,11 +158,4 @@ module.exports = app => ({
 
     },
 
-    /**
-     * 测试RSA解密
-     */
-    testRSA() {
-        const { ctx, helper } = app;
-        const { publicKey, data } = ctx.request.body;
-    }
 })
