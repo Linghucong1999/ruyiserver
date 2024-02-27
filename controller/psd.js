@@ -27,11 +27,11 @@ module.exports = app => ({
             await Promise.all(descendantsList.map(async (layer, i) => {
                 if (layer.isGroup() || !layer.visible) return;
                 try {
-                    await layer.saveAsPng(path.join(__dirname, '../public' + currentPathDir + `/${i}.png`));
+                    await layer.saveAsPng(path.join(__dirname, '../public' + currentPathDir + `/${i}.jpg`));
                     psdSourceList.push({
                         ...layer.export(),
                         type: 'picture',
-                        imageSrc: ($config.baseUrl || '') + `${currentPathDir}/${i}.png`,
+                        imageSrc: ($config.baseUrl || `http://127.0.0.1:${$config.port}`) + `${currentPathDir}/${i}.jpg`,
                     });
                 } catch (err) {
                     console.error(`图层${i}保存失败: ${err}`);
@@ -43,6 +43,7 @@ module.exports = app => ({
             }, '解析成功');
         } catch (err) {
             console.log('psd上传失败...' + err);
+            helper.returnBody(false, { elements: null, document: null }, '解析失败', 408);
         }
     }
 })
