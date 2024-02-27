@@ -33,7 +33,7 @@ module.exports = app => {
     router.get('/ruyi/template/getMyTemplates', middleware.auth, controller.page.getMyTemplateList);
 
     // 上传psd文件
-    router.post('/ruyi/psd/upload', controller.psd.psdUpload);
+    router.post('/ruyi/psd/upload', middleware.auth, controller.psd.psdUpload);
 
 
 }
