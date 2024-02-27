@@ -92,5 +92,15 @@ module.exports = app => ({
     async getPageDetail(pageId) {
         const { model } = app;
         return await model.page.findById(pageId).exec();
+    },
+
+    /**
+     * 更新页面
+     * @param {*} pageData 
+     * @returns 
+     */
+    async updated(pageData) {
+        const { model } = app;
+        return await model.findOneAndUpdate({ _id: pageData._id }, { $set: pageData }, { runValidators: true });
     }
 })

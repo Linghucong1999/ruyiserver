@@ -41,6 +41,14 @@ module.exports = app => ({
         const { pageId } = ctx.request.query;
         const pageDetail = await service.page.getPageDetail(pageId);
         helper.returnBody(true, pageDetail);
-    }
+    },
+
+    /**
+     * 更新页面
+     */
+    async updatedPage() {
+        const { ctx, $config, helper } = app;
+        const { pageData } = ctx.request.body;
+    },
 
 })
