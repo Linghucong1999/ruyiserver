@@ -47,8 +47,14 @@ module.exports = app => ({
      * 更新页面
      */
     async updatedPage() {
-        const { ctx, $config, helper } = app;
+        const { ctx, service, helper } = app;
         const { pageData } = ctx.request.body;
+        try {
+            await service.page.updated(pageData);
+            helper.returnBody(true, {}, '更新成功');
+        } catch (err) {
+            console.log('更新页面数据失败...', err);
+        }
     },
 
 })

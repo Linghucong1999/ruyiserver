@@ -101,6 +101,6 @@ module.exports = app => ({
      */
     async updated(pageData) {
         const { model } = app;
-        return await model.findOneAndUpdate({ _id: pageData._id }, { $set: pageData }, { runValidators: true });
+        return await model.page.findOneAndUpdate({ _id: pageData._id }, { $set: pageData }, { runValidators: true });
     }
 })
