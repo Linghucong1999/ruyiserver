@@ -32,11 +32,13 @@ module.exports = app => ({
                         ...layer.export(),
                         type: 'picture',
                         imageSrc: ($config.baseUrl || `http://127.0.0.1:${$config.port}`) + `${currentPathDir}/${i}.jpg`,
+                        zIndex: i,
                     });
                 } catch (err) {
                     console.error(`图层${i}保存失败: ${err}`);
                 }
             }));
+
             helper.returnBody(true, {
                 elements: psdSourceList,
                 document: psd.tree().export()

@@ -104,9 +104,6 @@ module.exports = app => ({
         const decryptedData = key.decrypt(data, 'utf8');
         return decryptedData;
     },
-
-
-
 });
 
 
