@@ -3,7 +3,10 @@ module.exports = app => {
     const Schema = mongoose.Schema;
 
     const emailCodeSchema = new Schema({
-        email: String,
+        email: {
+            type: String,
+            ref: 'user',
+        },
         code: String,
         expire: Date
     })
