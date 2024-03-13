@@ -1,6 +1,9 @@
 module.exports = app => {
     const { router, controller, middleware } = app;
 
+    //测试数据加密
+    router.post('/ruyi/test/encrypt/data', controller.test.encryTestData);
+
     //发送公钥
     router.get('/ruyi/auth/rsa/login/key', controller.auth.getPublicKey);
 

@@ -104,6 +104,21 @@ module.exports = app => ({
         const decryptedData = key.decrypt(data, 'utf8');
         return decryptedData;
     },
+
+    /**
+     * Postman 数据测试加密
+     * @param {*} data 
+     * @param {*} publicKey 
+     */
+    async encryptTestData(data) {
+        const publicKey = await this.generatePublicKey();
+        // const key = new NodeRSA();
+        // key.importKey(publicKey, 'pkcs1-public');
+        const key =new NodeRSA(publicKey, { encryptionScheme: 'pkcs1' });
+        const encryptedData = key.encrypt(data, 'base64');
+        return encryptedData;
+
+    }
 });
 
 
