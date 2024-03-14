@@ -18,27 +18,37 @@ module.exports = app => ({
             const file = ctx.request.files.file;
             const psd = await PSD.open(file.filepath);
             const timeStr = new Date().getTime();
-            const descendantsList = psd.tree().descendants();
-            descendantsList.reverse();
-            let psdSourceList = [];
+            const descendantsList = psd.tree().descendants().filter(layer => !layer.isGroup() && layer.visible).reverse();
             const currentPathDir = `/resource/upload_psd/${timeStr}`;
+            
             await helper.dirExists(path.join(__dirname, '../public' + currentPathDir));
-            // 批量保存图片并行处理
-            await Promise.all(descendantsList.map(async (layer, i) => {
-                if (layer.isGroup() || !layer.visible) return;
-                try {
-                    await layer.saveAsPng(path.join(__dirname, '../public' + currentPathDir + `/${i}.jpg`));
-                    psdSourceList.push({
-                        ...layer.export(),
-                        type: 'picture',
-                        imageSrc: ($config.baseUrl || `http://127.0.0.1:${$config.port}`) + `${currentPathDir}/${i}.jpg`,
-                        zIndex: i,
-                    });
-                } catch (err) {
-                    console.error(`图层${i}保存失败: ${err}`);
+            const concurrencyLimit = 5;
+            let runningPromises = [];
+            let psdSourceList = [];
+            for (let i = 0; i < descendantsList.length; i++) {
+                if (runningPromises.length >= concurrencyLimit) {
+                    await Promise.race(runningPromises);
                 }
-            }));
-
+                
+                const layer = descendantsList[i];
+                const promise = layer.saveAsPng(path.join(__dirname, '../public' + currentPathDir + `/${i}.jpg`))
+                    .then(() => {
+                        psdSourceList.unshift({
+                            ...layer.export(),
+                            type: 'picture',
+                            imageSrc: ($config.baseUrl || `http://127.0.0.1:${$config.port}`) + `${currentPathDir}/${i}.jpg`,
+                            zIndex: i,
+                        });
+                    })
+                    .catch(err => {
+                        console.error(`图层${i}保存失败: ${err}`);
+                    });
+                runningPromises.push(promise);
+                promise.finally(() => {
+                    runningPromises = runningPromises.filter(p => p !== promise);
+                });
+            }
+            await Promise.allSettled(runningPromises);
             helper.returnBody(true, {
                 elements: psdSourceList,
                 document: psd.tree().export()
