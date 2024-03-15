@@ -1,5 +1,15 @@
+const Queue = require('promise-queue');
+const queue = new Queue(5, 10);
+
 module.exports = app => {
     const { router, controller, middleware } = app;
+
+    // 限制请求API次数
+    const handleRequest = async (ctx, next) => {
+        await queue.add(async () => {
+            await next();
+        })
+    }
 
     //测试数据加密
     router.post('/ruyi/test/encrypt/data', controller.test.encryTestData);
@@ -8,36 +18,36 @@ module.exports = app => {
     router.get('/ruyi/auth/rsa/login/key', controller.auth.getPublicKey);
 
     //登录注册
-    router.post('/ruyi/auth/login', controller.auth.login);
-    router.post('/ruyi/auth/login/email', controller.auth.loginByEmail);
-    router.post('/ruyi/auth/send/email/code', controller.user.sendLoginByEmailCode);
-    router.post('/ruyi/auth/register', controller.auth.register);
+    router.post('/ruyi/auth/login', handleRequest, controller.auth.login);
+    router.post('/ruyi/auth/login/email', handleRequest, controller.auth.loginByEmail);
+    router.post('/ruyi/auth/send/email/code', handleRequest, controller.user.sendLoginByEmailCode);
+    router.post('/ruyi/auth/register', handleRequest, controller.auth.register);
 
     //用户
-    router.get('/ruyi/user/info', middleware.auth, controller.user.getUserinfo);
-    router.post('/ruyi/user/updata/name', middleware.auth, controller.user.updataUserName);
-    router.post('/ruyi/user/updata/password', middleware.auth, controller.user.updataPassword);
-    router.post('/ruyi/user/updata/avater', middleware.auth, controller.user.updataAvatar);
-    router.get('/ruyi/user/getUserList', middleware.auth, controller.user.fuzzyQueryUserList);
+    router.get('/ruyi/user/info', handleRequest, middleware.auth, controller.user.getUserinfo);
+    router.post('/ruyi/user/updata/name', handleRequest, middleware.auth, controller.user.updataUserName);
+    router.post('/ruyi/user/updata/password', handleRequest, middleware.auth, controller.user.updataPassword);
+    router.post('/ruyi/user/updata/avater', handleRequest, middleware.auth, controller.user.updataAvatar);
+    router.get('/ruyi/user/getUserList', handleRequest, middleware.auth, controller.user.fuzzyQueryUserList);
 
     //用户未登录前的重置密码步骤
-    router.post('/ruyi/email/password/reset/first', controller.user.resetPasswordFirstStep);
+    router.post('/ruyi/email/password/reset/first', handleRequest, controller.user.resetPasswordFirstStep);
 
     //通过邮箱后重置密码
-    router.post('/ruyi/email/password/reset/second', middleware.auth, controller.user.userResetPassword);
+    router.post('/ruyi/email/password/reset/second', handleRequest, middleware.auth, controller.user.userResetPassword);
 
     //页面
-    router.get('/ruyi/page/getMyPages', middleware.auth, controller.page.myPageList);
-    router.post('/ruyi/page/create', middleware.auth, controller.page.createPage);
-    router.get('/ruyi/page/getPageDetail', middleware.auth, controller.page.getPageDetail);
-    router.post('/ruyi/page/update', middleware.auth, controller.page.updatedPage);
+    router.get('/ruyi/page/getMyPages', handleRequest, middleware.auth, controller.page.myPageList);
+    router.post('/ruyi/page/create', handleRequest, middleware.auth, controller.page.createPage);
+    router.get('/ruyi/page/getPageDetail', handleRequest, middleware.auth, controller.page.getPageDetail);
+    router.post('/ruyi/page/update', handleRequest, middleware.auth, controller.page.updatedPage);
 
 
     //我的模板
-    router.get('/ruyi/template/getMyTemplates', middleware.auth, controller.page.getMyTemplateList);
+    router.get('/ruyi/template/getMyTemplates', handleRequest, middleware.auth, controller.page.getMyTemplateList);
 
     // 上传psd文件
-    router.post('/ruyi/psd/upload', middleware.auth, controller.psd.psdUpload);
+    router.post('/ruyi/psd/upload', handleRequest, middleware.auth, controller.psd.psdUpload);
 
 
 }

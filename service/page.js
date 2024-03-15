@@ -91,7 +91,7 @@ module.exports = app => ({
      */
     getPageDetail(pageId) {
         const { model } = app;
-        return model.page.findById(pageId).exec();
+        return model.page.findById(pageId);
     },
 
     /**
