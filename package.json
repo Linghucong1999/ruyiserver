@@ -10,8 +10,8 @@
     "stop": "pm2 stop all",
     "monit": "pm2 monit",
     "plus": "pm2 plus",
-    "doc":"clinic doctor -- node index.js",
-    "bub":"clinic bundle -- node index.js"
+    "doc": "clinic doctor -- node index.js",
+    "bub": "clinic bundle -- node index.js"
   },
   "author": "linghucong1998",
   "license": "ISC",
@@ -32,7 +32,8 @@
     "node-rsa": "^1.1.1",
     "node-schedule": "^2.1.1",
     "nodemailer": "^6.9.7",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "promise-queue": "^2.2.5"
   },
   "devDependencies": {
     "@babel/node": "^7.22.19",
