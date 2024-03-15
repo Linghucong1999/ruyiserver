@@ -2,7 +2,10 @@ module.exports = {
     port: 8018,
     mongodb: {
         url: 'mongodb://localhost:27017/ruyidatabase',
-        options: {}
+        options: {
+            maxPoolSize: 10,
+            minPoolSize: 2,
+        }
     },
     middleware: ['handlerError'],
     jwt: { secret: 'linghucong1998' },

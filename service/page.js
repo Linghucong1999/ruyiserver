@@ -89,9 +89,9 @@ module.exports = app => ({
      * 获取页面详情
      * 如果表复杂，那么记得可以使用populate可以进行连表查，但是使用到mongodb了，就希望不使用到这一步骤
      */
-    async getPageDetail(pageId) {
+    getPageDetail(pageId) {
         const { model } = app;
-        return await model.page.findById(pageId).exec();
+        return model.page.findById(pageId).exec();
     },
 
     /**

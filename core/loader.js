@@ -82,6 +82,16 @@ function initModel(app) {
         //app上拓展两个属性
         app.$mongoose = mongoose;
         app.$db = mongoose.connection;
+
+        const db = mongoose.connection;
+        db.on('error', console.error.bind(console, '数据库连接错误原因'));
+        db.once('open', function () {
+            console.log('数据库连接成功');
+        });
+        db.on('disconnected', function () {
+            console.log('重连中');
+            mongoose.connect(app.$config.mongodb.url, app.$config.mongodb.options);
+        });
     }
 
     //初始化model文件

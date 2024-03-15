@@ -7,8 +7,16 @@ module.exports = app => ({
     async login() {
         const { ctx, service, helper } = app;
         const { username, password } = ctx.request.body;
+
+        if (!username || !password) {
+            helper.returnBody(false, {}, '请核对表单');
+            return;
+        }
+
         //验证数据库是否存在
         let user = await service.user.getUsersByUsername(username);
+        // const query = { username: { $in: username } };
+        // let user = await model.user.findOne(query, { password: 0 });
         if (!user) {
             helper.returnBody(false, {}, '用户不存在');
             return;
@@ -20,6 +28,7 @@ module.exports = app => ({
             const decryptPassword = await helper.decryptData(password);
 
             const userCurrentPassword = await service.user.getUsersPasswordByUsername(username);
+            // const userCurrentPassword = await model.user.findOne(query).select('password').exec();
             const verifyPass = await helper.verifyPassword(decryptPassword, userCurrentPassword.password);
             if (!verifyPass) {
                 helper.returnBody(false, '', "密码错误，请重试!");
@@ -38,6 +47,7 @@ module.exports = app => ({
         let token = await helper.createToken(userDataStr);
 
         helper.returnBody(true, { access_token: token, userInfo: user }, '登录成功');
+
     },
 
     /**
