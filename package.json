@@ -9,7 +9,9 @@
     "start": "pm2 start ecosystem.config.js",
     "stop": "pm2 stop all",
     "monit": "pm2 monit",
-    "plus": "pm2 plus"
+    "plus": "pm2 plus",
+    "doc":"clinic doctor -- node index.js",
+    "bub":"clinic bundle -- node index.js"
   },
   "author": "linghucong1998",
   "license": "ISC",
