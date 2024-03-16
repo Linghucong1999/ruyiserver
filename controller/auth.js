@@ -58,15 +58,15 @@ module.exports = app => ({
         const { ctx, service, helper } = app;
         const { email, code } = ctx.request.body;
         if (!email) {
-            helper.returnBody(false, {}, '邮箱不能为空');
+            helper.returnBody(true, {}, '邮箱不能为空');
             return;
         } else if (!code) {
-            helper.returnBody(false, {}, '验证码不能为空');
+            helper.returnBody(true, {}, '验证码不能为空');
         }
 
         let emailUser = await service.user.findUserByEmail(email);
         if (!emailUser.email) {
-            helper.returnBody(false, {}, '邮箱未注册');
+            helper.returnBody(true, {}, '邮箱未注册');
             return;
         }
 
@@ -75,7 +75,7 @@ module.exports = app => ({
             const findEmailCode = await service.user.findEmailAndCode(email);
             const isfindEmailCode = helper.isEmpty(findEmailCode);
             if (isfindEmailCode) {
-                helper.returnBody(false, {}, '验证码已过期,请重新发送');
+                helper.returnBody(true, {}, '验证码已过期,请重新发送');
                 return;
             }
 
@@ -104,7 +104,7 @@ module.exports = app => ({
             //登录成功删除验证码
             await service.user.deleteEmailAndCode(email);
         } catch (err) {
-            helper.returnBody(false, {}, '服务器登录出错');
+            helper.returnBody(false, {}, '服务器登录出错', 500);
             return;
         }
 
