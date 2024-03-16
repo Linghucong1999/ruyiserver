@@ -145,7 +145,7 @@ module.exports = app => ({
 
     async findEmailAndCode(email) {
         const { model } = app;
-        return await model.emailCode.findOne({ email }).exec();
+        return await model.emailCode.findOne({ email }).sort({ expire: -1 }).limit(1);
     },
 
     /**

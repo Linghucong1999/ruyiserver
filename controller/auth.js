@@ -85,10 +85,10 @@ module.exports = app => ({
 
 
             if (findEmailCode.code !== code) {
-                helper.returnBody(false, {}, '验证码错误');
+                helper.returnBody(true, {}, '验证码错误');
                 return;
             } else if (time >= 60 * 1000) {
-                helper.returnBody(false, {}, '验证码已过期');
+                helper.returnBody(true, {}, '验证码已过期');
                 //过期就删除数据库里的验证码集合
                 await service.user.deleteEmailAndCode(email);
                 return;
