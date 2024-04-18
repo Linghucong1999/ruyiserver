@@ -9,7 +9,7 @@ module.exports = app => ({
         const { username, password } = ctx.request.body;
 
         if (!username || !password) {
-            helper.returnBody(false, {}, '请核对表单');
+            helper.returnBody(true, {}, '请核对表单');
             return;
         }
 
@@ -18,7 +18,7 @@ module.exports = app => ({
         // const query = { username: { $in: username } };
         // let user = await model.user.findOne(query, { password: 0 });
         if (!user) {
-            helper.returnBody(false, {}, '用户不存在');
+            helper.returnBody(true, {}, '用户不存在');
             return;
         }
 
@@ -31,11 +31,11 @@ module.exports = app => ({
             // const userCurrentPassword = await model.user.findOne(query).select('password').exec();
             const verifyPass = await helper.verifyPassword(decryptPassword, userCurrentPassword.password);
             if (!verifyPass) {
-                helper.returnBody(false, '', "密码错误，请重试!");
+                helper.returnBody(true, {}, "密码错误，请重试!");
                 return;
             }
         } catch (err) {
-            helper.returnBody(false, '', '解密出错');
+            helper.returnBody(true, {}, '解密出错');
             return;
         }
 
@@ -121,10 +121,10 @@ module.exports = app => ({
 
         //密码长度拦截
         if (!password) {
-            helper.returnBody(false, {}, "密码不能为空");
+            helper.returnBody(true, {}, "密码不能为空");
             return;
         } else if (!email) {
-            helper.returnBody(false, {}, "邮箱不能为空");
+            helper.returnBody(true, {}, "邮箱不能为空");
             return
         }
 
@@ -137,7 +137,7 @@ module.exports = app => ({
         });
 
         if (user.length > 0) {
-            helper.returnBody(false, {}, "用户或邮箱已被注册");
+            helper.returnBody(true, {}, "用户或邮箱已被注册");
             return;
         }
 
