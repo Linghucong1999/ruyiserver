@@ -49,5 +49,9 @@ module.exports = app => {
     // 上传psd文件
     router.post('/ruyi/psd/upload', handleRequest, middleware.auth, controller.psd.psdUpload);
 
+    // 用户上传的图片库
+    router.get('/ruyi/imageLib/myImages', middleware.auth, controller.image.getMyImages);
+    router.post('/ruyi/imageLib/upload', middleware.auth, controller.image.uploadImage);
+
 
 }

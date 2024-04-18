@@ -20,8 +20,13 @@ module.exports = app => ({
         const userData = ctx.userData;
         const timestamps = (new Date().getTime).toString();
         const file = ctx.request.files.file;
-        const fileResult = await service.file.uploadFile(file, 'image_lib/' + userData.username + '/' + timestamps);
-        const imageData = await service.image.addImage(fileResult.url);
-        helper.returnBody(true, imageData);
+        try {
+            const fileResult = await service.file.uploadFile(file, 'image_lib/' + userData.username + '/' + timestamps);
+            const imageData = await service.image.addImage(fileResult.url);
+            helper.returnBody(true, imageData);
+        } catch (err) {
+            console.log('图片上传问题', err);
+            helper.returnBody(true, {}, '图片上传出错');
+        }
     }
 })
