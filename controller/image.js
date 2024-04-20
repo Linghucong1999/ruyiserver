@@ -18,7 +18,7 @@ module.exports = app => ({
     async uploadImage() {
         const { ctx, service, helper } = app;
         const userData = ctx.userData;
-        const timestamps = (new Date().getTime).toString();
+        const timestamps = (new Date().getTime()).toString();
         const file = ctx.request.files.file;
         try {
             const fileResult = await service.file.uploadFile(file, 'image_lib/' + userData.username + '/' + timestamps);
