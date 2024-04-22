@@ -102,5 +102,13 @@ module.exports = app => ({
     async updated(pageData) {
         const { model } = app;
         return await model.page.findOneAndUpdate({ _id: pageData._id }, { $set: pageData }, { runValidators: true });
+    },
+
+    /**
+     * 发布页面
+     */
+    async setPublish(id) {
+        const { model } = app;
+        return await model.page.findByIdAndUpdate(id, { $set: { isPublish: true } });
     }
 })

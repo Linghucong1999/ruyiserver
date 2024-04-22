@@ -79,4 +79,52 @@ module.exports = app => ({
         }
     },
 
+    /**
+     * 复制页面
+     */
+    async copyPage() {
+        const { ctx, service, helper } = app;
+        const { id } = ctx.request.body;
+        try {
+            const page = await service.page.getPageDetail(id);
+            page._id = undefined;
+            page.isPublish = false;
+            page.isTemplate = false;
+            page.members = [];
+            const newPage = await service.page.createPage(page);
+            helper.returnBody(true, { _id: newPage._id });
+        } catch (err) {
+            console.log('复制页面失败...', err);
+            helper.returnBody(true, {}, '复制页面失败');
+        }
+    },
+
+    /**
+     * 发布页面
+     */
+    async publish() {
+        const { ctx, service, helper } = app;
+        const { id } = ctx.request.body;
+        await service.page.setPublish(id);
+        helper.returnBody(true);
+    },
+
+    /**
+     * 设置为模板
+     */
+    async setTemplate() {
+        const { ctx, service, helper } = app;
+        const userData = ctx.userData;
+        const { id } = ctx.request.body;
+        const page = await service.page.getPageDetail(id);
+        page = page.toObject();
+        page._id = undefined;
+        page.isTemplate = true;
+        page.isPublish = false;
+        page.members = [];
+        page.author = userData._id;
+        const newPage = await service.page.createPage(page);
+        helper.returnBody(true, { _id: newPage._id });
+    }
+
 })

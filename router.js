@@ -41,6 +41,9 @@ module.exports = app => {
     router.post('/ruyi/page/create', handleRequest, middleware.auth, controller.page.createPage);
     router.get('/ruyi/page/getPageDetail', handleRequest, middleware.auth, controller.page.getPageDetail);
     router.post('/ruyi/page/update', handleRequest, middleware.auth, controller.page.updatedPage);
+    router.post('/ruyi/page/copy', middleware.auth, controller.page.copyPage);
+    router.post('/ruyi/page/setPublish', middleware.auth, controller.page.publish);
+    router.post('/ruyi/page/setTemplate', middleware.auth, controller.page.setTemplate);
 
     // 页面渲染
     router.get('/ruyi/view/:_id', controller.page.view);
