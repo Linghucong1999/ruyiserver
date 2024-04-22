@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title></title>
@@ -24,27 +25,32 @@
       margin: 0;
       box-sizing: border-box;
     }
-    html, body, #app{
+
+    html,
+    body,
+    #app {
       position: relative;
       width: 100%;
       height: 100%;
     }
   </style>
   <script>
-	  window._pageData = <%- JSON.stringify(pageData) %>
+    window._pageData = JSON.parse('<%- JSON.stringify(pageData) %>');
   </script>
 </head>
+
 <body>
-<div id="app">
-  <engine-h5-swiper  />
-</div>
-<script>
-  new Vue({
-	  el:"#app"
-  })
-</script>
-<script>
-	eval(window._pageData.script);
-</script>
+  <div id="app">
+    <engine-h5-swiper />
+  </div>
+  <script>
+    new Vue({
+      el: "#app"
+    })
+  </script>
+  <script>
+    eval(window._pageData.script);
+  </script>
 </body>
+
 </html>

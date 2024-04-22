@@ -61,16 +61,22 @@ module.exports = app => ({
      */
     async view() {
         const { ctx, service } = app;
-        const pageID = ctx.params._id;
-        const pageData = await service.page.getPageDetail(pageID);
-        const pageMode = {
-            'H5': 'ruyi-swiper',
-            'longPage': 'ruyi-long',
-            'relativePage': 'ruyi-relative',
-            'pc': 'pc'
-        };
-        ctx.status = 200;
-        await ctx.render(pageMode[pageData.pageMode], { pageData: pageData });
+        try {
+            const pageID = ctx.params._id;
+            const pageData = await service.page.getPageDetail(pageID);
+            const pageMode = {
+                'H5': 'ruyi-swiper',
+                'longPage': 'ruyi-swiper',
+                'relativePage': 'ruyi-relative',
+                'pc': 'pc'
+            };
+            ctx.status = 200;
+            await ctx.render(pageMode[pageData.pageMode], { pageData: pageData });
+        } catch (err) {
+            console.log('渲染页面失败...', err);
+            ctx.status = 500;
+
+        }
     },
 
 })

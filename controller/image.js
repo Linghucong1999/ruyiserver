@@ -36,6 +36,7 @@ module.exports = app => ({
     async uploadCoverImage() {
         const { ctx, service, helper } = app;
         const _id = ctx.params._id;
+        const userData = ctx.userData;
         const timestamps = (new Date().getTime()).toString();
         const file = ctx.request.files.file;
         try {
