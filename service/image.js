@@ -18,5 +18,13 @@ module.exports = app => ({
             author: userData._id,
             url,
         })
+    },
+
+    /**
+     * 添加项目封面图片
+     */
+    async addCoverImage(url, id) {
+        const { model } = app;
+        return await model.page.findOneAndUpdate({ _id: id }, { $set: { coverImage: url } }, { runValidators: true });
     }
 })

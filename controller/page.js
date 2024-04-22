@@ -56,5 +56,21 @@ module.exports = app => ({
             console.log('更新页面数据失败...', err);
         }
     },
+    /**
+     * 渲染页面
+     */
+    async view() {
+        const { ctx, service } = app;
+        const pageID = ctx.params._id;
+        const pageData = await service.page.getPageDetail(pageID);
+        const pageMode = {
+            'H5': 'ruyi-swiper',
+            'longPage': 'ruyi-long',
+            'relativePage': 'ruyi-relative',
+            'pc': 'pc'
+        };
+        ctx.status = 200;
+        await ctx.render(pageMode[pageData.pageMode], { pageData: pageData });
+    },
 
 })

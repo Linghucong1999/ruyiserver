@@ -42,6 +42,9 @@ module.exports = app => {
     router.get('/ruyi/page/getPageDetail', handleRequest, middleware.auth, controller.page.getPageDetail);
     router.post('/ruyi/page/update', handleRequest, middleware.auth, controller.page.updatedPage);
 
+    // 页面渲染
+    router.get('/ruyi/view/:_id', controller.page.view);
+
 
     //我的模板
     router.get('/ruyi/template/getMyTemplates', handleRequest, middleware.auth, controller.page.getMyTemplateList);
@@ -52,6 +55,9 @@ module.exports = app => {
     // 用户上传的图片库
     router.get('/ruyi/imageLib/myImages', middleware.auth, controller.image.getMyImages);
     router.post('/ruyi/imageLib/upload', middleware.auth, controller.image.uploadImage);
+
+    // 项目封面图片
+    router.post('/ruyi/imageCommon/upload/:_id', middleware.auth, controller.image.uploadCoverImage);
 
 
 }
