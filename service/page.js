@@ -110,5 +110,44 @@ module.exports = app => ({
     async setPublish(id) {
         const { model } = app;
         return await model.page.findByIdAndUpdate(id, { $set: { isPublish: true } });
+    },
+
+    /**
+     * 获取协作人列表
+     */
+    async getCooperationUserListByPageId(id) {
+        const { model } = app;
+        const doc = await model.page.findOne({ _id: id }).populate({
+            path: 'members',
+            model: model.user,
+            select: 'name username _id email avatar',
+        }).exec();
+        return doc.members;
+    },
+
+    /**
+     * 通过用户集合添加协作者
+     */
+    async addCooperationUser(pageId, userIds) {
+        const { model } = app;
+        await model.page.findByIdAndUpdate({ _id: pageId }, {
+            $addToSet: {
+                members: { $each: userIds }
+            }
+        })
+        const pageData = await model.page.findOne({ _id: pageId }).populate({
+            path: 'members',
+            model: model.user,
+            select: 'name username _id email avatar',
+        }).exec();
+        return pageData.members;
+    },
+
+    /**
+     * 删除协作人
+     */
+    async removeCooperationUser(pageId, userId) {
+        const { model } = app;
+        return await model.page.updateOne({ _id: pageId }, { $pull: { members: userId } }, { runValidators: true });
     }
 })

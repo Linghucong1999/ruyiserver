@@ -41,9 +41,14 @@ module.exports = app => {
     router.post('/ruyi/page/create', handleRequest, middleware.auth, controller.page.createPage);
     router.get('/ruyi/page/getPageDetail', handleRequest, middleware.auth, controller.page.getPageDetail);
     router.post('/ruyi/page/update', handleRequest, middleware.auth, controller.page.updatedPage);
-    router.post('/ruyi/page/copy', middleware.auth, controller.page.copyPage);
-    router.post('/ruyi/page/setPublish', middleware.auth, controller.page.publish);
-    router.post('/ruyi/page/setTemplate', middleware.auth, controller.page.setTemplate);
+    router.post('/ruyi/page/copy', handleRequest, middleware.auth, controller.page.copyPage);
+    router.post('/ruyi/page/setPublish', handleRequest, middleware.auth, controller.page.publish);
+    router.post('/ruyi/page/setTemplate', handleRequest, middleware.auth, controller.page.setTemplate);
+
+    // 页面协作
+    router.get('/ruyi/page/getCooperationList', handleRequest, middleware.auth, controller.cooperation.getCooperationUserListByPageID);
+    router.post('/ruyi/page/addCooperation', handleRequest, middleware.auth, controller.cooperation.addCooperationUser);
+    router.post('/ruyi/page/deleteCooperation', handleRequest, middleware.auth, controller.cooperation.removeCooperationUser);
 
     // 页面渲染
     router.get('/ruyi/view/:_id', controller.page.view);
