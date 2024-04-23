@@ -18952,7 +18952,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/babel-loader/lib/index.js!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=template&id=50d29b5b&scoped=true
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/babel-loader/lib/index.js!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=template&id=4b748fd8&scoped=true
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
@@ -18968,7 +18968,7 @@ var render = function render() {
       staticClass: "swiper-slide flat relative hidden",
       style: _vm.getCommonStyle(page.commonStyle)
     }, [_c('div', {
-      staticClass: "quark-page-wrapper",
+      staticClass: "ruyi-page-wrapper",
       style: _vm.getCommonStyle({
         ...page.commonStyle,
         top: _vm.pageTop,
@@ -19070,19 +19070,20 @@ const configObj = {
             value: 'H5',
             label: 'H5',
             disabled: false
-        }, {
-            value: 'longPage',
-            label: 'WebAPP',
-            disabled: false
-        }, {
-            name: 'relativePage',
-            label: '排版图文',
-            disabled: true,
-        }, {
-            value: 'PC',
-            label: 'PC页面',
-            disabled: true,
-        }
+        },
+        //  {
+        //     value: 'longPage',
+        //     label: 'WebAPP',
+        //     disabled: false
+        // }, {
+        //     name: 'relativePage',
+        //     label: '排版图文',
+        //     disabled: true,
+        // }, {
+        //     value: 'PC',
+        //     label: 'PC页面',
+        //     disabled: true,
+        // }
     ],
 };
 
@@ -19251,21 +19252,21 @@ const copyElement = (element, extendStyle = {}) => {
     copyElement,
     copyPage,
 });
-;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/babel-loader/lib/index.js!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/engine-template/engine-h5-swiper/src/components-template.vue?vue&type=template&id=cfb5de46
-var components_templatevue_type_template_id_cfb5de46_render = function render() {
+;// CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib/index.js??clonedRuleSet-82.use[1]!./node_modules/babel-loader/lib/index.js!./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/engine-template/engine-h5-swiper/src/components-template.vue?vue&type=template&id=78dc9183
+var components_templatevue_type_template_id_78dc9183_render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c('div', {
-    staticClass: "quark-element-wrapper",
+    staticClass: "ruyi-element-wrapper",
     on: {
       "click": _vm.handleClick
     }
   }, [_c(_vm.element.elName, _vm._b({
     tag: "component",
-    staticClass: "quark-element ani"
+    staticClass: "ruyi-element ani"
   }, 'component', _vm.element.propsValue, false))], 1);
 };
-var components_templatevue_type_template_id_cfb5de46_staticRenderFns = [];
+var components_templatevue_type_template_id_78dc9183_staticRenderFns = [];
 
 ;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/text/src/index.vue?vue&type=template&id=d5dd8e2c&scoped=true
 var srcvue_type_template_id_d5dd8e2c_scoped_true_render = function render(){var _vm=this,_c=_vm._self._c;return _c('div',{staticClass:"ruyi-text"},[_vm._v(" "+_vm._s(_vm.text)+" ")])
@@ -19470,10 +19471,10 @@ image_src.install = Vue => {
     Vue.component(image_src.name, image_src);
 };
 /* harmony default export */ var plugins_image = (image_src);
-;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/button/src/index.vue?vue&type=template&id=7ad41d8e
-var srcvue_type_template_id_7ad41d8e_render = function render(){var _vm=this,_c=_vm._self._c;return _c('div',{staticClass:"ruyi-button"},[_vm._v(" "+_vm._s(_vm.text)+" ")])
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/button/src/index.vue?vue&type=template&id=4b1c5876
+var srcvue_type_template_id_4b1c5876_render = function render(){var _vm=this,_c=_vm._self._c;return _c('div',{staticClass:"ruyi-button"},[_c('el-button',{attrs:{"type":"primary","size":"small"}},[_vm._v(_vm._s(_vm.text))])],1)
 }
-var srcvue_type_template_id_7ad41d8e_staticRenderFns = []
+var srcvue_type_template_id_4b1c5876_staticRenderFns = []
 
 
 ;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/button/src/index.vue?vue&type=script&lang=js
@@ -19500,8 +19501,8 @@ var srcvue_type_template_id_7ad41d8e_staticRenderFns = []
 ;
 var button_src_component = normalizeComponent(
   plugins_button_srcvue_type_script_lang_js,
-  srcvue_type_template_id_7ad41d8e_render,
-  srcvue_type_template_id_7ad41d8e_staticRenderFns,
+  srcvue_type_template_id_4b1c5876_render,
+  srcvue_type_template_id_4b1c5876_staticRenderFns,
   false,
   null,
   null,
@@ -19944,10 +19945,322 @@ textarea_src.install = Vue => {
     Vue.component(textarea_src.name,textarea_src);
 };
 /* harmony default export */ var plugins_textarea = (textarea_src);
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/image-carousel/src/index.vue?vue&type=template&id=78ab5112&scoped=true
+var srcvue_type_template_id_78ab5112_scoped_true_render = function render(){var _vm=this,_c=_vm._self._c;return _c('div',{staticClass:"ruyi-image-carsousel"},[(_vm.imageSrcList.length > 0)?_c('Swiper',{staticClass:"image-carsousel-swiper",attrs:{"autoPlay":true,"showIndicator":true,"interval":_vm.interval,"duration":"500"}},_vm._l((_vm.imageSrcList),function(item,index){return _c('Slide',{key:index,staticClass:"image-carsousel-slide"},[_c('img',{staticClass:"image-carsousel-image",attrs:{"src":item,"alt":""}})])}),1):_vm._e()],1)
+}
+var srcvue_type_template_id_78ab5112_scoped_true_staticRenderFns = []
+
+
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./node_modules/vue-swiper-component/swiper.vue?vue&type=template&id=24765e69
+var swipervue_type_template_id_24765e69_render = function render(){var _vm=this,_c=_vm._self._c;return _c('section',{staticClass:"wh_content",on:{"touchmove":_vm.fn}},[_c('div',{staticClass:"wh_swiper",class:_vm.className,on:{"touchstart":_vm.s,"touchmove":_vm.m,"touchend":_vm.e}},[_vm._t("default")],2),(_vm.showIndicator)?_c('div',{staticClass:"wh_indicator"},_vm._l((_vm.slidesLength),function(tag,$index){return _c('div',{staticClass:"wh_indicator_item",class:{ wh_show_bgcolor: _vm.index-1==$index }})}),0):_vm._e()])
+}
+var swipervue_type_template_id_24765e69_staticRenderFns = []
+
+
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./node_modules/vue-swiper-component/swiper.vue?vue&type=script&lang=js
+
+    /* harmony default export */ var swipervue_type_script_lang_js = ({
+        data() {
+            return {
+                slidesLength: 1,
+                _width: 0,
+                auto: true,
+                slideing: true,
+                timer1: '',
+                className: '',
+                dom: {},
+                t: {
+                    sx: 0,
+                    s: 0,
+                    m: 0,
+                    e: 0
+                },
+                index: 1
+            }
+        },
+        props: {
+            //滑动所需要的时间
+            autoPlay: {
+                default: true
+            },
+            //一次滑动需要走多久
+            duration: {
+                default: 500
+            },
+            //两次滑动间隔的时间
+            interval: {
+                default: 2500
+            },
+            showIndicator: {
+                default: true
+            }
+        },
+        mounted() {
+            this.className = `wh_swiper_${Math.random().toFixed(3) * 1000}`
+            setTimeout(() => {
+                //克隆dom
+                this.starDom()
+                this.dom.transform = `translate3d(${this._width * -1}px, 0px, 0px)`
+                this.dom['-webkit-transform'] = `translate3d(${this._width * -1}px, 0px, 0px)`
+                this.dom['-ms-transform'] = `translate3d(${this._width * -1}px, 0px, 0px)`
+                if (this.autoPlay) {
+                    this.setTime()
+                }
+            }, 50)
+
+        },
+        methods: {
+            s(x) {
+                if (this.slideing) {
+                    this.clearTimeOut()
+                    this.t.sx = this.getTransform()
+                    this.t.s = x.touches[x.touches.length - 1].clientX
+                }
+            },
+            m(x) {
+                if (this.slideing && this.t.s != -1) {
+                    this.clearTimeOut()
+                    this.t.m = x.touches[x.touches.length - 1].clientX - this.t.s
+                    this.setTransform(this.t.m + this.t.sx)
+                }
+            },
+            e(x) {
+                if (this.slideing && this.t.s != -1) {
+                    this.clearTimeOut()
+                    this.setTransform(this.t.m + this.t.sx)
+                    var x = this.getTransform()
+                    x += this.t.m > 0 ? this._width * 0.3 : this._width * -0.3
+                    this.index = Math.round(x / this._width) * -1
+                    this.wh('touch')
+                }
+            },
+            setTransform(num) {
+                this.dom.transform = `translate3d(${num}px, 0px, 0px)`
+                this.dom['-webkit-transform'] = `translate3d(${num}px, 0px, 0px)`
+                this.dom['-ms-transform'] = `translate3d(${num}px, 0px, 0px)`
+            },
+            getTransform() {
+                var x = this.dom.transform || this.dom['-webkit-transform'] || this.dom['-ms-transform'];
+                x = x.substring(12)
+                x = x.match(/(\S*)px/)[1]
+                return Number(x)
+            },
+            fn(e) {
+                e.preventDefault()
+            },
+            prevSlide() {
+                this.clearTimeOut()
+                this.index--
+                this.wh()
+            },
+            nextSlide() {
+                this.clearTimeOut()
+                this.index++
+                this.wh()
+            },
+            slideTo(index) {
+                this.clearTimeOut()
+                this.index = index + 1
+                this.wh()
+            },
+            wh(type) {
+                this.slideing = false
+                this.dom.transition = type == 'touch' ? '250ms' : this.duration + 'ms'
+                this.setTransform(this.index * -1 * this._width)
+                this.t.m = 0
+                this.t.s = -1 //保证下次重新赋值
+                if (this.autoPlay) {
+                    this.setTime()
+                }
+                var timeDuration = type == 'touch' ? '250' : this.duration
+                setTimeout(() => {
+                    this.dom.transition = '0s'
+                    if (this.index >= this.slidesLength + 1) {
+                        this.index = 1
+                        this.setTransform(this.index * -1 * this._width)
+                    }
+                    if (this.index <= 0) {
+                        this.index = this.slidesLength
+                        this.setTransform(this.index * -1 * this._width)
+                    }
+                    this.$emit('transtionend', this.index - 1)
+                    this.auto = true
+                    this.slideing = true
+                }, timeDuration)
+            },
+            setTime() {
+                this.timer1 = window.setTimeout(() => {
+                    if (this.auto) {
+                        this.index++
+                        this.wh()
+                    } else {
+                        window.clearTimeout(this.timer1)
+                    }
+                }, this.interval)
+            },
+            starDom() {
+                var SlideDom = document.querySelector('.' + this.className).getElementsByClassName('wh_slide')
+                this.slidesLength = SlideDom.length
+                if (this.slidesLength > 1) {
+                    var cloneDom1 = SlideDom[0].cloneNode(true) //向最后append
+                    var cloneDom2 = SlideDom[this.slidesLength - 1].cloneNode(true) //向最前append
+                    document.querySelector('.' + this.className).insertBefore(cloneDom2, SlideDom[0])
+                    document.querySelector('.' + this.className).appendChild(cloneDom1)
+                    this._width = document.querySelector('.' + this.className).offsetWidth
+                    this.dom = document.querySelector('.' + this.className).style
+                }
+            },
+            clearTimeOut() {
+                this.auto = false
+                window.clearTimeout(this.timer1)
+            }
+        }
+    });
+
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/swiper.vue?vue&type=script&lang=js
+ /* harmony default export */ var vue_swiper_component_swipervue_type_script_lang_js = (swipervue_type_script_lang_js); 
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-54.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-54.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-54.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./node_modules/vue-swiper-component/swiper.vue?vue&type=style&index=0&id=24765e69&prod&lang=css
+// extracted by mini-css-extract-plugin
+
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/swiper.vue?vue&type=style&index=0&id=24765e69&prod&lang=css
+
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/swiper.vue
+
+
+
+;
+
+
+/* normalize component */
+
+var swiper_component = normalizeComponent(
+  vue_swiper_component_swipervue_type_script_lang_js,
+  swipervue_type_template_id_24765e69_render,
+  swipervue_type_template_id_24765e69_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var swiper = (swiper_component.exports);
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/loaders/templateLoader.js??ruleSet[1].rules[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./node_modules/vue-swiper-component/slide.vue?vue&type=template&id=946ebcde
+var slidevue_type_template_id_946ebcde_render = function render(){var _vm=this,_c=_vm._self._c;return _c('div',{staticClass:"wh_slide",on:{"click":_vm.clickSlide}},[_vm._t("default")],2)
+}
+var slidevue_type_template_id_946ebcde_staticRenderFns = []
+
+
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./node_modules/vue-swiper-component/slide.vue?vue&type=script&lang=js
+
+    /* harmony default export */ var slidevue_type_script_lang_js = ({
+        methods: {
+            clickSlide() {
+                this.$emit('click')
+            }
+        }
+    });
+
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/slide.vue?vue&type=script&lang=js
+ /* harmony default export */ var vue_swiper_component_slidevue_type_script_lang_js = (slidevue_type_script_lang_js); 
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-54.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-54.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-54.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./node_modules/vue-swiper-component/slide.vue?vue&type=style&index=0&id=946ebcde&prod&lang=css
+// extracted by mini-css-extract-plugin
+
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/slide.vue?vue&type=style&index=0&id=946ebcde&prod&lang=css
+
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/slide.vue
+
+
+
+;
+
+
+/* normalize component */
+
+var slide_component = normalizeComponent(
+  vue_swiper_component_slidevue_type_script_lang_js,
+  slidevue_type_template_id_946ebcde_render,
+  slidevue_type_template_id_946ebcde_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var slide = (slide_component.exports);
+;// CONCATENATED MODULE: ./node_modules/vue-swiper-component/index.js
+
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/image-carousel/src/index.vue?vue&type=script&lang=js
+
+
+/* harmony default export */ var image_carousel_srcvue_type_script_lang_js = ({
+  name: "RuyiImageCarousel",
+  components: {
+    Swiper: swiper,
+    Slide: slide,
+  },
+  props: {
+    imageSrcList: {
+      type: Array,
+      default: () => {
+        return [
+          "https://th.wallhaven.cc/small/l8/l8vp7y.jpg",
+          "https://th.wallhaven.cc/small/l8/l8v3ey.jpg",
+          "https://th.wallhaven.cc/small/we/werowr.jpg",
+        ];
+      },
+    },
+    interval: {
+      type: Number,
+      default: 2500,
+    },
+  },
+});
+
+;// CONCATENATED MODULE: ./src/plugins/image-carousel/src/index.vue?vue&type=script&lang=js
+ /* harmony default export */ var plugins_image_carousel_srcvue_type_script_lang_js = (image_carousel_srcvue_type_script_lang_js); 
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-74.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-74.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-74.use[2]!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-74.use[3]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/plugins/image-carousel/src/index.vue?vue&type=style&index=0&id=78ab5112&prod&lang=less&scoped=true
+// extracted by mini-css-extract-plugin
+
+;// CONCATENATED MODULE: ./src/plugins/image-carousel/src/index.vue?vue&type=style&index=0&id=78ab5112&prod&lang=less&scoped=true
+
+;// CONCATENATED MODULE: ./src/plugins/image-carousel/src/index.vue
+
+
+
+;
+
+
+/* normalize component */
+
+var image_carousel_src_component = normalizeComponent(
+  plugins_image_carousel_srcvue_type_script_lang_js,
+  srcvue_type_template_id_78ab5112_scoped_true_render,
+  srcvue_type_template_id_78ab5112_scoped_true_staticRenderFns,
+  false,
+  null,
+  "78ab5112",
+  null
+  
+)
+
+/* harmony default export */ var image_carousel_src = (image_carousel_src_component.exports);
+;// CONCATENATED MODULE: ./src/plugins/image-carousel/index.js
+
+image_carousel_src.install = Vue => {
+    Vue.component(image_carousel_src.name, image_carousel_src);
+};
+/* harmony default export */ var image_carousel = (image_carousel_src);
+
 ;// CONCATENATED MODULE: ./src/plugins/index.js
 /**
  * 组件库入口
  */
+
 
 
 
@@ -19976,6 +20289,7 @@ const components = [
     date_time_select,
     plugins_textarea,
     number_input,
+    image_carousel
 ];
 
 // 定义install方法
@@ -20133,8 +20447,8 @@ async function runAnimation($el, animationList = [], isDebugger, callback) {
 ;
 var components_template_component = normalizeComponent(
   src_components_templatevue_type_script_lang_js,
-  components_templatevue_type_template_id_cfb5de46_render,
-  components_templatevue_type_template_id_cfb5de46_staticRenderFns,
+  components_templatevue_type_template_id_78dc9183_render,
+  components_templatevue_type_template_id_78dc9183_staticRenderFns,
   false,
   null,
   null,
@@ -20209,10 +20523,10 @@ var components_template_component = normalizeComponent(
 });
 ;// CONCATENATED MODULE: ./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=script&lang=js
  /* harmony default export */ var engine_template_engine_h5_swiper_srcvue_type_script_lang_js = (engine_h5_swiper_srcvue_type_script_lang_js); 
-;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-54.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-54.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-54.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=style&index=0&id=50d29b5b&prod&scoped=true&lang=css
+;// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js??clonedRuleSet-54.use[0]!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-54.use[1]!./node_modules/@vue/vue-loader-v15/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-54.use[2]!./node_modules/@vue/vue-loader-v15/lib/index.js??vue-loader-options!./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=style&index=0&id=4b748fd8&prod&scoped=true&lang=css
 // extracted by mini-css-extract-plugin
 
-;// CONCATENATED MODULE: ./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=style&index=0&id=50d29b5b&prod&scoped=true&lang=css
+;// CONCATENATED MODULE: ./src/engine-template/engine-h5-swiper/src/index.vue?vue&type=style&index=0&id=4b748fd8&prod&scoped=true&lang=css
 
 ;// CONCATENATED MODULE: ./src/engine-template/engine-h5-swiper/src/index.vue
 
@@ -20229,7 +20543,7 @@ var engine_h5_swiper_src_component = normalizeComponent(
   staticRenderFns,
   false,
   null,
-  "50d29b5b",
+  "4b748fd8",
   null
   
 )
