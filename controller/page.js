@@ -86,7 +86,8 @@ module.exports = app => ({
         const { ctx, service, helper } = app;
         const { id } = ctx.request.body;
         try {
-            const page = await service.page.getPageDetail(id);
+            let page = await service.page.getPageDetail(id);
+            page = page.toObject();
             page._id = undefined;
             page.isPublish = false;
             page.isTemplate = false;
@@ -95,7 +96,6 @@ module.exports = app => ({
             helper.returnBody(true, { _id: newPage._id });
         } catch (err) {
             console.log('复制页面失败...', err);
-            helper.returnBody(true, {}, '复制页面失败');
         }
     },
 
@@ -114,17 +114,49 @@ module.exports = app => ({
      */
     async setTemplate() {
         const { ctx, service, helper } = app;
-        const userData = ctx.userData;
+        try {
+            const userData = ctx.userData;
+            const { id } = ctx.request.body;
+            let page = await service.page.getPageDetail(id);
+            page = page.toObject();
+            page._id = undefined;
+            page.isTemplate = true;
+            page.isPublish = true;
+            page.members = [];
+            page.author = userData._id;
+            const newPage = await service.page.createPage({ ...page });
+            helper.returnBody(true, { _id: newPage._id });
+        } catch (err) {
+            console.log('设置为模板失败...', err);
+        }
+    },
+
+    /**
+     * 删除页面
+     */
+    async deletePage() {
+        const { ctx, service, helper } = app;
         const { id } = ctx.request.body;
-        const page = await service.page.getPageDetail(id);
-        page = page.toObject();
-        page._id = undefined;
-        page.isTemplate = true;
-        page.isPublish = false;
-        page.members = [];
-        page.author = userData._id;
-        const newPage = await service.page.createPage(page);
-        helper.returnBody(true, { _id: newPage._id });
+        try {
+            await service.page.deletePage(id);
+            helper.returnBody(true);
+        } catch (err) {
+            console.log('删除页面失败...', err);
+        }
+    },
+
+    /**
+     * 获取模板市场的所有模板
+     */
+    async getPublishTemplates() {
+        const { ctx, service, helper } = app;
+        const { pageMode } = ctx.request.query;
+        try {
+            const pages = await service.page.getPublishTemplates(pageMode);
+            helper.returnBody(true, pages);
+        } catch (err) {
+            console.log('获取模板市场失败...', err);
+        }
     }
 
 })

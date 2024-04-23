@@ -149,5 +149,23 @@ module.exports = app => ({
     async removeCooperationUser(pageId, userId) {
         const { model } = app;
         return await model.page.updateOne({ _id: pageId }, { $pull: { members: userId } }, { runValidators: true });
+    },
+
+    /**
+     * 删除页面
+     */
+    async deletePage(id) {
+        const { model } = app;
+        return await model.page.findOneAndDelete({ _id: id });
+    },
+
+    /**
+     * 获取模板市场里的模板
+     */
+    async getPublishTemplates(pageMode) {
+        const { model } = app;
+        const query = { isPublish: true, isTemplate: true };
+        if (pageMode) query.pageMode = pageMode;
+        return await model.page.find(query).select('_id title coverImage').exec();
     }
 })

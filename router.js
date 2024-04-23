@@ -44,6 +44,7 @@ module.exports = app => {
     router.post('/ruyi/page/copy', handleRequest, middleware.auth, controller.page.copyPage);
     router.post('/ruyi/page/setPublish', handleRequest, middleware.auth, controller.page.publish);
     router.post('/ruyi/page/setTemplate', handleRequest, middleware.auth, controller.page.setTemplate);
+    router.post('/ruyi/page/delete', handleRequest, middleware.auth, controller.page.deletePage);
 
     // 页面协作
     router.get('/ruyi/page/getCooperationList', handleRequest, middleware.auth, controller.cooperation.getCooperationUserListByPageID);
@@ -56,6 +57,8 @@ module.exports = app => {
 
     //我的模板
     router.get('/ruyi/template/getMyTemplates', handleRequest, middleware.auth, controller.page.getMyTemplateList);
+    // 模板市场
+    router.get('/ruyi/template/getPublishTemplates', handleRequest, middleware.auth, controller.page.getPublishTemplates);
 
     // 上传psd文件
     router.post('/ruyi/psd/upload', handleRequest, middleware.auth, controller.psd.psdUpload);
