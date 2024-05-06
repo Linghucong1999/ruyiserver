@@ -33,10 +33,11 @@ class Application {
 
 
 
-        this.$app.use(async (ctx, next) => {
-            this.ctx = ctx;
-            await next();
-        })
+        // this.$app.use(async (ctx, next) => {
+        //     // this.ctx = ctx;
+        //     // console.log(ctx);
+        //     await next();
+        // })
 
         this.$app.use(this.$router.routes());
     }

@@ -82,8 +82,8 @@ module.exports = app => ({
      * 更新用户昵称
      * @param {*} name
      */
-    async updataUserName(name) {
-        const { ctx, model } = app;
+    async updataUserName(name,ctx) {
+        const { model } = app;
         const userData = await ctx.userData;
         await model.user.findByIdAndUpdate(userData._id, { $set: { name: name } });
         return model.user.findOne({ _id: userData._id }, selectUserKey)

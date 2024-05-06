@@ -4,6 +4,8 @@ module.exports = app => {
             await next();
         } catch (err) {
             const status = err.status || 500;
+            console.log("中间件错误：" + err.message);
+
 
             // 生产环境时 500 错误的详细错误内容不返回给客户端，因为可能包含敏感信息
             const error = status === 500 ? 'Internal Server Error' : err.message;

@@ -1,15 +1,16 @@
 module.exports = app => ({
+
     /**
      * 登录
      * @returns {Promise<void>}
      */
 
-    async login() {
-        const { ctx, service, helper } = app;
+    async login(ctx) {
+        const { service, helper } = app;
         const { username, password } = ctx.request.body;
 
         if (!username || !password) {
-            helper.returnBody(true, {}, '请核对表单');
+            helper.returnBody(ctx, true, {}, '请核对表单');
             return;
         }
 
@@ -18,7 +19,7 @@ module.exports = app => ({
         // const query = { username: { $in: username } };
         // let user = await model.user.findOne(query, { password: 0 });
         if (!user) {
-            helper.returnBody(true, {}, '用户不存在');
+            helper.returnBody(ctx, true, {}, '用户不存在');
             return;
         }
 
@@ -31,11 +32,11 @@ module.exports = app => ({
             // const userCurrentPassword = await model.user.findOne(query).select('password').exec();
             const verifyPass = await helper.verifyPassword(decryptPassword, userCurrentPassword.password);
             if (!verifyPass) {
-                helper.returnBody(true, {}, "密码错误，请重试!");
+                helper.returnBody(ctx, true, {}, "密码错误，请重试!");
                 return;
             }
         } catch (err) {
-            helper.returnBody(true, {}, '解密出错');
+            helper.returnBody(ctx, true, {}, '解密出错');
             return;
         }
 
@@ -54,19 +55,19 @@ module.exports = app => ({
      * 邮箱登录
      * @returns {Promise<void>}
      */
-    async loginByEmail() {
-        const { ctx, service, helper } = app;
+    async loginByEmail(ctx) {
+        const { service, helper } = app;
         const { email, code } = ctx.request.body;
         if (!email) {
-            helper.returnBody(true, {}, '邮箱不能为空');
+            helper.returnBody(ctx, true, {}, '邮箱不能为空');
             return;
         } else if (!code) {
-            helper.returnBody(true, {}, '验证码不能为空');
+            helper.returnBody(ctx, true, {}, '验证码不能为空');
         }
 
         let emailUser = await service.user.findUserByEmail(email);
         if (!emailUser.email) {
-            helper.returnBody(true, {}, '邮箱未注册');
+            helper.returnBody(ctx, true, {}, '邮箱未注册');
             return;
         }
 
@@ -75,7 +76,7 @@ module.exports = app => ({
             const findEmailCode = await service.user.findEmailAndCode(email);
             const isfindEmailCode = helper.isEmpty(findEmailCode);
             if (isfindEmailCode) {
-                helper.returnBody(true, {}, '验证码已过期,请重新发送');
+                helper.returnBody(ctx, true, {}, '验证码已过期,请重新发送');
                 return;
             }
 
@@ -85,10 +86,10 @@ module.exports = app => ({
 
 
             if (findEmailCode.code !== code) {
-                helper.returnBody(true, {}, '验证码错误');
+                helper.returnBody(ctx, true, {}, '验证码错误');
                 return;
             } else if (time >= 60 * 1000) {
-                helper.returnBody(true, {}, '验证码已过期');
+                helper.returnBody(ctx, true, {}, '验证码已过期');
                 //过期就删除数据库里的验证码集合
                 await service.user.deleteEmailAndCode(email);
                 return;
@@ -100,11 +101,11 @@ module.exports = app => ({
 
             //生成token
             let token = await helper.createToken(userDataStr);
-            helper.returnBody(true, { access_token: token, userInfo: emailUser }, '登录成功');
+            helper.returnBody(ctx, true, { access_token: token, userInfo: emailUser }, '登录成功');
             //登录成功删除验证码
             await service.user.deleteEmailAndCode(email);
         } catch (err) {
-            helper.returnBody(false, {}, '服务器登录出错', 500);
+            helper.returnBody(ctx, false, {}, '服务器登录出错', 500);
             return;
         }
 

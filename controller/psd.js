@@ -12,15 +12,15 @@ module.exports = app => ({
      * 解析psd
      * @return {Promise<void>}
      */
-    async psdUpload() {
-        const { ctx, $config, helper } = app;
+    async psdUpload(ctx) {
+        const { $config, helper } = app;
         try {
             const file = ctx.request.files.file;
             const psd = await PSD.open(file.filepath);
             const timeStr = new Date().getTime();
             const descendantsList = psd.tree().descendants().filter(layer => !layer.isGroup() && layer.visible).reverse();
             const currentPathDir = `/resource/upload_psd/${timeStr}`;
-            
+
             await helper.dirExists(path.join(__dirname, '../public' + currentPathDir));
             const concurrencyLimit = 5;
             let runningPromises = [];
@@ -29,7 +29,7 @@ module.exports = app => ({
                 if (runningPromises.length >= concurrencyLimit) {
                     await Promise.race(runningPromises);
                 }
-                
+
                 const layer = descendantsList[i];
                 const promise = layer.saveAsPng(path.join(__dirname, '../public' + currentPathDir + `/${i}.jpg`))
                     .then(() => {
@@ -49,13 +49,13 @@ module.exports = app => ({
                 });
             }
             await Promise.allSettled(runningPromises);
-            helper.returnBody(true, {
+            helper.returnBody(ctx, true, {
                 elements: psdSourceList,
                 document: psd.tree().export()
             }, '解析成功');
         } catch (err) {
             console.log('psd上传失败...' + err);
-            helper.returnBody(false, { elements: null, document: null }, '解析失败', 408);
+            helper.returnBody(ctx, false, { elements: null, document: null }, '解析失败', 408);
         }
     }
 })

@@ -3,8 +3,8 @@ module.exports = app => ({
      * 获取我的页面列表
      * @returns {Promise<void>}
      */
-    async getMyPageList(pageMode, type) {
-        const { ctx, model } = app;
+    async getMyPageList(pageMode, type, ctx) {
+        const { model } = app;
         let userData = ctx.userData;
         let query = {
             pageMode,
@@ -24,8 +24,8 @@ module.exports = app => ({
      * 获取‘我的’页面数量
      * @returns {Promise<void>}
      */
-    async getMyPagesCount(pageMode) {
-        const { ctx, model } = app;
+    async getMyPagesCount(pageMode, ctx) {
+        const { model } = app;
         let userData = ctx.userData;
         let query = {
             author: userData._id,
@@ -40,8 +40,8 @@ module.exports = app => ({
      * 获取‘我’协作的页面
      * @returns {Promise<void>}
      */
-    async getCooperationPages(pageMode) {
-        const { ctx, model } = app;
+    async getCooperationPages(pageMode,ctx) {
+        const { model } = app;
         let userData = ctx.userData;
         let query = {
             members: {
@@ -58,8 +58,8 @@ module.exports = app => ({
      * 获取我的模板列表
      * @param pageMode
      */
-    async getMyTemplates(pageMode) {
-        const { ctx, model } = app;
+    async getMyTemplates(pageMode,ctx) {
+        const { model } = app;
         let userData = ctx.userData;
         let query = {
             author: userData._id,
@@ -76,8 +76,8 @@ module.exports = app => ({
      * @param pageData
      * @returns {Promise<void>}
      */
-    async createPage(pageData) {
-        const { ctx, model } = app;
+    async createPage(pageData,ctx) {
+        const { model } = app;
         let userData = ctx.userData;
         return await model.page.create({
             ...pageData,

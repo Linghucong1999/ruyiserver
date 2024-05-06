@@ -6,29 +6,29 @@ module.exports = app => ({
      * 获取个人信息
      * @returns {Promise<viod>}
      */
-    async getUserinfo() {
-        const { ctx, helper, service } = app;
+    async getUserinfo(ctx) {
+        const { helper, service } = app;
         let user = await service.user.getUserById(ctx.userData._id);
-        helper.returnBody(true, user);
+        helper.returnBody(ctx, true, user);
     },
 
     /**
      * 更新个人姓名
      * @returns {Promise<void>}
      */
-    async updataUserName() {
-        const { ctx, service, helper } = app;
+    async updataUserName(ctx) {
+        const { service, helper } = app;
         const { name } = ctx.request.body;
-        const user = await service.user.updataUserName(name);
-        helper.returnBody(true, user);
+        const user = await service.user.updataUserName(name, ctx);
+        helper.returnBody(ctx, true, user);
     },
 
     /**
      * 更新密码
      * @returns {Promise<void>}
      */
-    async updataPassword() {
-        const { ctx, service, helper } = app;
+    async updataPassword(ctx) {
+        const { service, helper } = app;
         const userData = ctx.userData;
         const { oldPassword, newPassword, reconPassword } = ctx.request.body;
 
@@ -37,7 +37,7 @@ module.exports = app => ({
         const decryptReconPassword = await helper.decryptData(reconPassword);
 
         if (decryptNewPassword !== decryptReconPassword) {
-            helper.returnBody(false, '更改输入的两次密码不一致');
+            helper.returnBody(ctx,false, '更改输入的两次密码不一致');
             return;
         }
 

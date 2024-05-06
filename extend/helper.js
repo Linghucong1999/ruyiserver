@@ -12,8 +12,8 @@ module.exports = app => ({
      * @param message //返回的信息提示
      * @param code //状态码
      */
-    returnBody(status = true, body = {}, message = 'success', code = 200) {
-        let { ctx } = app;
+    returnBody(ctx, status = true, body = {}, message = 'success', code = 200) {
+        // let { ctx } = app;
         ctx.status = code;
         ctx.body = {
             status,
@@ -112,7 +112,7 @@ module.exports = app => ({
      */
     async encryptTestData(data) {
         const publicKey = await this.generatePublicKey();
-        const key =new NodeRSA(publicKey, { encryptionScheme: 'pkcs1' });
+        const key = new NodeRSA(publicKey, { encryptionScheme: 'pkcs1' });
         const encryptedData = key.encrypt(data, 'base64');
         return encryptedData;
 
