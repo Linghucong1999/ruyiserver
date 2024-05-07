@@ -6,3 +6,4 @@ public/resource
 yarn-error.log
 logs
 .clinic
+/dist-ruyi-web
