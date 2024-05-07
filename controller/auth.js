@@ -47,7 +47,7 @@ module.exports = app => ({
         //生成token
         let token = await helper.createToken(userDataStr);
 
-        helper.returnBody(true, { access_token: token, userInfo: user }, '登录成功');
+        helper.returnBody(ctx, true, { access_token: token, userInfo: user }, '登录成功');
 
     },
 
@@ -116,16 +116,16 @@ module.exports = app => ({
      * 注册
      * @returns {Promise<void>}
      */
-    async register() {
-        const { ctx, service, helper } = app;
+    async register(ctx) {
+        const { service, helper } = app;
         const { username, password, email } = ctx.request.body;
 
         //密码长度拦截
         if (!password) {
-            helper.returnBody(true, {}, "密码不能为空");
+            helper.returnBody(ctx, true, {}, "密码不能为空");
             return;
         } else if (!email) {
-            helper.returnBody(true, {}, "邮箱不能为空");
+            helper.returnBody(ctx, true, {}, "邮箱不能为空");
             return
         }
 
@@ -138,7 +138,7 @@ module.exports = app => ({
         });
 
         if (user.length > 0) {
-            helper.returnBody(true, {}, "用户或邮箱已被注册");
+            helper.returnBody(ctx, true, {}, "用户或邮箱已被注册");
             return;
         }
 
@@ -151,20 +151,20 @@ module.exports = app => ({
 
         //token
         let token = await helper.createToken(userDataStr);
-        helper.returnBody(true, { access_token: token, userInfo: userDataStr }, '注册成功!');
+        helper.returnBody(ctx, true, { access_token: token, userInfo: userDataStr }, '注册成功!');
     },
 
     /**
      * 返回给前端的RSA公钥
      * @return {*} publicKey:公钥;privateKey:私钥
      */
-    async getPublicKey() {
+    async getPublicKey(ctx) {
         const { helper } = app;
         try {
             const publicKey = await helper.generatePublicKey()
-            helper.returnBody(true, { publicKey }, '获取成功!');
+            helper.returnBody(ctx, true, { publicKey }, '获取成功!');
         } catch (err) {
-            helper.returnBody(false, {}, '获取公钥失败');
+            helper.returnBody(ctx, false, {}, '获取公钥失败');
         }
 
     },

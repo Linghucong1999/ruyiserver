@@ -37,7 +37,7 @@ module.exports = app => ({
         const decryptReconPassword = await helper.decryptData(reconPassword);
 
         if (decryptNewPassword !== decryptReconPassword) {
-            helper.returnBody(ctx,false, '更改输入的两次密码不一致');
+            helper.returnBody(ctx, false, '更改输入的两次密码不一致');
             return;
         }
 
@@ -45,29 +45,29 @@ module.exports = app => ({
         const verifyPassword = await helper.verifyPassword(decryptOldPassword, userCurrentPassword.password);
 
         if (!verifyPassword) {
-            helper.returnBody(false, {}, '原密码错误');
+            helper.returnBody(ctx, false, {}, '原密码错误');
             return;
         }
 
         const password = await helper.createPassword(decryptNewPassword);
-        const user = await service.user.updataPassword(password);
-        helper.returnBody(true, user);
+        const user = await service.user.updataPassword(ctx, password);
+        helper.returnBody(ctx, true, user);
     },
 
     /**
      * 更新头像
      * @returns {Promise<void>}
      */
-    async updataAvatar() {
-        const { ctx, service, helper } = app;
+    async updataAvatar(ctx) {
+        const { service, helper } = app;
         const userData = ctx.userData;
         let file = ctx.request.files.file;
         try {
             let fileResult = await service.file.uploadFile(file, 'avatar/' + userData.username);
-            const user = await service.user.updataAvatar(fileResult.url);
-            helper.returnBody(true, user);
+            const user = await service.user.updataAvatar(ctx, fileResult.url);
+            helper.returnBody(ctx, true, user);
         } catch (err) {
-            helper.returnBody(false, err);
+            helper.returnBody(ctx, false, err);
         }
 
 
@@ -76,11 +76,11 @@ module.exports = app => ({
     /**
      * 模糊查询
      */
-    async fuzzyQueryUserList() {
-        const { ctx, service, helper } = app;
+    async fuzzyQueryUserList(ctx) {
+        const { service, helper } = app;
         const { keywords } = ctx.request.query;
         const users = await service.user.findUserByKeyword(keywords);
-        helper.returnBody(true, users);
+        helper.returnBody(ctx, true, users);
     },
 
 
@@ -88,18 +88,18 @@ module.exports = app => ({
      * 发送邮箱验证码
      * @returns {Promise<void>}
      */
-    async sendLoginByEmailCode() {
-        const { ctx, service, helper } = app;
+    async sendLoginByEmailCode(ctx) {
+        const { service, helper } = app;
         const { email } = ctx.request.body;
         const user = await service.user.findUserByEmail(email);
         const isUser = helper.isEmpty(user);
         if (isUser) {
-            helper.returnBody(false, {}, '该邮箱未注册');
+            helper.returnBody(ctx, false, {}, '该邮箱未注册');
             return;
         }
         //smtp认证使用的邮箱账号密码
-        let username = '2865911620@aliyun.com';
-        let password = '2865911620@qq.com';
+        const username = '2865911620@aliyun.com';
+        const password = '2865911620@qq.com';
 
         //创建邮箱连接池
         let transporter = nodemailer.createTransport({
@@ -154,10 +154,10 @@ module.exports = app => ({
             let saveCode = await service.user.saveEmailAndCode(email, code);
 
             if (saveCode) {
-                helper.returnBody(true, {}, '验证码发送成功');
+                helper.returnBody(ctx, true, {}, '验证码发送成功');
                 console.log('验证码发送成功');
             } else {
-                helper.returnBody(false, {}, '验证码存储失败');
+                helper.returnBody(ctx, false, {}, '验证码存储失败');
             }
         }
 
@@ -166,13 +166,13 @@ module.exports = app => ({
     /**
      * 通过邮箱重置密码第一步，验证邮箱以及验证验证码是否过期
      */
-    async resetPasswordFirstStep() {
-        const { ctx, service, helper } = app;
+    async resetPasswordFirstStep(ctx) {
+        const { service, helper } = app;
         const { email, code } = ctx.request.body;
         const findEmailAndCode = await service.user.findEmailAndCode(email);
         const isFindEmailCode = helper.isEmpty(findEmailAndCode);
         if (isFindEmailCode) {
-            helper.returnBody(false, {}, '验证码已过期,请重新发送');
+            helper.returnBody(ctx, false, {}, '验证码已过期,请重新发送');
             return;
         }
 
@@ -182,10 +182,10 @@ module.exports = app => ({
 
 
         if (findEmailAndCode.code !== code) {
-            helper.returnBody(false, {}, '验证码错误');
+            helper.returnBody(ctx, false, {}, '验证码错误');
             return;
         } else if (time >= 60 * 1000) {
-            helper.returnBody(false, {}, '验证码已过期');
+            helper.returnBody(ctx, false, {}, '验证码已过期');
             //过期就删除数据库里的验证码集合
             await service.user.deleteEmailAndCode(email);
             return;
@@ -197,12 +197,12 @@ module.exports = app => ({
 
             //生成token
             let token = await helper.createToken(userDataStr);
-            helper.returnBody(true, { access_token: token });
+            helper.returnBody(ctx, true, { access_token: token });
 
             //删除验证码
             await service.user.deleteEmailAndCode(email);
         } catch (err) {
-            helper.returnBody(false, {}, '服务器出错');
+            helper.returnBody(ctx, false, {}, '服务器出错');
             return;
         }
     },
@@ -210,19 +210,19 @@ module.exports = app => ({
     /**
      * 通过邮箱和验证码验证后,用户进行重置密码
      */
-    async userResetPassword() {
-        const { ctx, service, helper } = app;
+    async userResetPassword(ctx) {
+        const { service, helper } = app;
 
         const { newPassword, reconPassword } = ctx.request.body;
         const decryptNewPassword = await helper.decryptData(newPassword);
         const decryptReconPassword = await helper.decryptData(reconPassword);
         if (decryptNewPassword !== decryptReconPassword) {
-            helper.returnBody(false, '更改输入的两次密码不一致');
+            helper.returnBody(ctx, false, '更改输入的两次密码不一致');
             return;
         }
 
         const password = await helper.createPassword(decryptNewPassword);
-        const user = await service.user.updataPassword(password);
-        helper.returnBody(true, '密码重置成功', '密码重置成功');
+        const user = await service.user.updataPassword(ctx, password);
+        helper.returnBody(ctx, true, '密码重置成功', '密码重置成功');
     }
 })

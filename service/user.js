@@ -82,7 +82,7 @@ module.exports = app => ({
      * 更新用户昵称
      * @param {*} name
      */
-    async updataUserName(name,ctx) {
+    async updataUserName(name, ctx) {
         const { model } = app;
         const userData = await ctx.userData;
         await model.user.findByIdAndUpdate(userData._id, { $set: { name: name } });
@@ -93,8 +93,8 @@ module.exports = app => ({
      * 更新密码
      * @param {*} newPassword
      */
-    async updataPassword(newPassword) {
-        const { ctx, model } = app;
+    async updataPassword(ctx, newPassword) {
+        const { model } = app;
         const userData = await ctx.userData;
         await model.user.findByIdAndUpdate(userData._id, { $set: { password: newPassword } });
         return model.user.findOne({ _id: userData._id }, selectUserKey).exec();
@@ -104,8 +104,8 @@ module.exports = app => ({
      * 更新个人头像
      * @param {*} url
      */
-    async updataAvatar(url) {
-        const { ctx, model } = app;
+    async updataAvatar(ctx, url) {
+        const { model } = app;
         const userData = await ctx.userData;
         await model.user.findByIdAndUpdate(userData._id, { $set: { avatar: url } });
         return model.user.findOne({ _id: userData._id }, selectUserKey).exec();

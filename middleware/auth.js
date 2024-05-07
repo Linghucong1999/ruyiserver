@@ -19,11 +19,11 @@ module.exports = app => {
         try {
             user = await helper.verifyToken(token);
         } catch (err) {
-            helper.returnBody(false, {}, 'Token 无效,请重新登录', 401);
+            helper.returnBody(ctx, false, {}, 'Token 无效,请重新登录', 401);
         }
 
         if (!user) {
-            helper.returnBody(false, {}, '身份过期,请重新登录', 401);
+            helper.returnBody(ctx, false, {}, '身份过期,请重新登录', 401);
             return;
         }
 
