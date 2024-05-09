@@ -1,7 +1,6 @@
 node_modules
 RSA
 package-lock.json
-yarn.lock
 public/resource
 yarn-error.log
 logs
