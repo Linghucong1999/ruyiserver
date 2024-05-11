@@ -1,8 +1,10 @@
 node_modules
-RSA
 package-lock.json
 public/resource
 yarn-error.log
 logs
 .clinic
 /dist-ruyi-web
+public/zip
+RSA/private.pem
+RSA

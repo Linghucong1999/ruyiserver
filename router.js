@@ -11,6 +11,11 @@ module.exports = app => {
         })
     }
 
+    // 测试连接性
+    router.get('/ruyi', async (ctx, next) => {
+        ctx.body = '连接成功';
+    })
+
     //测试数据加密
     router.post('/ruyi/test/encrypt/data', controller.test.encryTestData);
 
@@ -70,5 +75,7 @@ module.exports = app => {
     // 项目封面图片
     router.post('/ruyi/imageCommon/upload/:_id', middleware.auth, controller.image.uploadCoverImage);
 
+    // 文件上传
+    router.post('/ruyi/file/upload', controller.file.upload);
 
 }

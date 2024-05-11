@@ -13,7 +13,6 @@ module.exports = app => ({
      * @param code //状态码
      */
     returnBody(ctx, status = true, body = {}, message = 'success', code = 200) {
-        // let { ctx } = app;
         ctx.status = code;
         ctx.body = {
             status,
