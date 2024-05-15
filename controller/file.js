@@ -16,6 +16,16 @@ module.exports = app => ({
                 highWaterMark: 3,
             });
             const readStream = createReadStream(file.filepath);
+
+            // 简单版，使用管道
+            // readStream.pipe(writeStream, {
+            //     end: false,
+            // });
+            // readStream.on('end', () => {
+            //     writeStream.end();
+            // })
+
+            // 复杂版
             readStream.on('data', chunk => {
                 if (!writeStream.write(chunk)) {
                     readStream.pause();

@@ -11,7 +11,8 @@ module.exports = {
     autorestart: true,  //自动重启
     ignore_watch: [                           // 不用监听的文件
       "node_modules",
-      "logs"
+      "logs",
+      "/public/zip/",
     ],
     windowsHide: true,
   }]
