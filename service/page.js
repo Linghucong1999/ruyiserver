@@ -40,7 +40,7 @@ module.exports = app => ({
      * 获取‘我’协作的页面
      * @returns {Promise<void>}
      */
-    async getCooperationPages(pageMode,ctx) {
+    async getCooperationPages(pageMode, ctx) {
         const { model } = app;
         let userData = ctx.userData;
         let query = {
@@ -58,7 +58,7 @@ module.exports = app => ({
      * 获取我的模板列表
      * @param pageMode
      */
-    async getMyTemplates(pageMode,ctx) {
+    async getMyTemplates(pageMode, ctx) {
         const { model } = app;
         let userData = ctx.userData;
         let query = {
@@ -76,7 +76,7 @@ module.exports = app => ({
      * @param pageData
      * @returns {Promise<void>}
      */
-    async createPage(pageData,ctx) {
+    async createPage(pageData, ctx) {
         const { model } = app;
         let userData = ctx.userData;
         return await model.page.create({
