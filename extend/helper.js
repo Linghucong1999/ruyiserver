@@ -30,8 +30,32 @@ module.exports = app => ({
 
     //验证token
     async verifyToken(token) {
-        let { $config } = app;
-        return await jwt.verify(token, $config.jwt.secret);
+        let { $config, model } = app;
+        const decoded = await jwt.verify(token, $config.jwt.secret)
+        const user_token = await model.token.findOne({ user_id: decoded._id });
+        return user_token.token === token ? decoded : '';
+    },
+
+    // 存储token
+    async saveToken(user_id, token) {
+        const { model } = app;
+        const user_token = await model.token.findOne({ user_id });
+        try {
+            if (user_token) {
+                user_token.old_token = user_token.token;
+                user_token.token = token;
+                await user_token.save();
+            } else {
+                await model.token.create({
+                    user_id,
+                    token,
+                    old_token: token
+                })
+            }
+        } catch (err) {
+            console.log(err + '存储token失败');
+            return;
+        }
     },
 
     //用户密码加密

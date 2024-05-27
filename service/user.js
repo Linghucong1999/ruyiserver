@@ -1,5 +1,3 @@
-const { mode } = require("crypto-js");
-
 let selectUserKey = { password: 0 };
 module.exports = app => ({
     /**

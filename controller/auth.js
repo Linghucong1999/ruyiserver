@@ -16,8 +16,6 @@ module.exports = app => ({
 
         //验证数据库是否存在
         let user = await service.user.getUsersByUsername(username);
-        // const query = { username: { $in: username } };
-        // let user = await model.user.findOne(query, { password: 0 });
         if (!user) {
             helper.returnBody(ctx, true, {}, '用户不存在');
             return;
@@ -46,6 +44,7 @@ module.exports = app => ({
 
         //生成token
         let token = await helper.createToken(userDataStr);
+        await helper.saveToken(user._id, token);
 
         helper.returnBody(ctx, true, { access_token: token, userInfo: user }, '登录成功');
 
