@@ -99,11 +99,13 @@ module.exports = app => ({
             let userDataStr = JSON.parse(JSON.stringify(emailUser));
 
             //生成token
-            let token = await helper.createToken(userDataStr);
+            const token = await helper.createToken(userDataStr);
+            await helper.saveToken(emailUser._id, token);
             helper.returnBody(ctx, true, { access_token: token, userInfo: emailUser }, '登录成功');
             //登录成功删除验证码
             await service.user.deleteEmailAndCode(email);
         } catch (err) {
+            console.log(err + "邮箱登录错误");
             helper.returnBody(ctx, false, {}, '服务器登录出错', 500);
             return;
         }
@@ -149,7 +151,8 @@ module.exports = app => ({
         let userDataStr = JSON.parse(JSON.stringify(userData)); //防止被篡改
 
         //token
-        let token = await helper.createToken(userDataStr);
+        const token = await helper.createToken(userDataStr);
+        await helper.saveToken(userData._id, token);
         helper.returnBody(ctx, true, { access_token: token, userInfo: userDataStr }, '注册成功!');
     },
 
