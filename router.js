@@ -27,6 +27,9 @@ module.exports = app => {
     router.post('/ruyi/auth/login/email', handleRequest, controller.auth.loginByEmail);
     router.post('/ruyi/auth/send/email/code', handleRequest, controller.user.sendLoginByEmailCode);
     router.post('/ruyi/auth/register', handleRequest, controller.auth.register);
+    router.post('/ruyi/auth/get/user/status', handleRequest, controller.token.checkLogin);
+    // 用户退出
+    router.get('/ruyi/auth/logout', handleRequest, middleware.auth, controller.token.logoutClearToken);
 
     //用户
     router.get('/ruyi/user/info', handleRequest, middleware.auth, controller.user.getUserinfo);
@@ -77,5 +80,7 @@ module.exports = app => {
 
     // 文件上传
     router.post('/ruyi/file/upload', controller.file.upload);
+
+
 
 }
