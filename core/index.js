@@ -4,7 +4,7 @@
 
 const path = require('path');
 const Koa = require('koa');
-const { initConfig, initController, initService, initModel, initRouter, initExtend, initMiddleware, generateRsaKeyPair } = require('./loader');
+const { initConfig, initController, initService, initModel, initRouter, initExtend, initMiddleware, generateRsaKeyPair, initConfidential } = require('./loader');
 
 class Application {
     constructor() {
@@ -22,6 +22,9 @@ class Application {
 
         //初始化中间件
         this.middleware = initMiddleware(this);
+
+        //初始化保密信息
+        this.confidential = initConfidential(this);
 
         //初始化model
         this.model = initModel(this);

@@ -89,7 +89,7 @@ module.exports = app => ({
      * @returns {Promise<void>}
      */
     async sendLoginByEmailCode(ctx) {
-        const { service, helper } = app;
+        const { service, helper, confidential } = app;
         const { email } = ctx.request.body;
         const user = await service.user.findUserByEmail(email);
         const isUser = helper.isEmpty(user);
@@ -98,8 +98,6 @@ module.exports = app => ({
             return;
         }
         //smtp认证使用的邮箱账号密码
-        const username = '2865911620@aliyun.com';
-        const password = '2865911620@qq.com';
 
         //创建邮箱连接池
         let transporter = nodemailer.createTransport({
@@ -107,8 +105,8 @@ module.exports = app => ({
             port: 465,
             secure: true,
             auth: {
-                user: username,
-                pass: password,
+                user: confidential.aliyunEmailUsername,
+                pass: confidential.aliyunEmailPassword,
             }
         })
 
@@ -125,7 +123,7 @@ module.exports = app => ({
         let code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 
         let mailOptions = {
-            from: `RuYICode<${username}>`,
+            from: `RuYICode<${confidential.aliyunEmailUsername}>`,
             to: email,
             subject: '无代码世界',
             text: '邮箱验证码',

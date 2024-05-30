@@ -7,4 +7,5 @@ logs
 /dist-ruyi-web
 public/zip
 RSA/private.pem
-RSA
+RSA\
+confidential

@@ -46,6 +46,14 @@ const initConfig = function () {
     })
     return config;
 }
+// 加密信息
+const initConfidential = function () {
+    let confidential = {};
+    scanFilesByFolder('../confidential', (filename, content) => {
+        confidential = { ...confidential, ...content };
+    });
+    return confidential;
+};
 
 //初始化路由
 const initRouter = function (app) {
@@ -145,4 +153,5 @@ module.exports = {
     initExtend,
     initMiddleware,
     generateRsaKeyPair,
+    initConfidential
 }
