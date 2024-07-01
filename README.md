@@ -1,4 +1,6 @@
+# 前端项目地址
 
+https://github.com/Linghucong1999/ruyiweb-puls.git
 
 # 相关的pm2操作
 
@@ -7,7 +9,6 @@
 2、pm2.io：监控和诊断 Web 界面：`pm2 plus`
 
 # 命令列表
-
 
 # Fork 模式
 
@@ -49,12 +50,11 @@ pm2 restart 0          # 重启指定进程id
 pm2 delete 0           # 将进程从pm2列表中删除
 pm2 delete all         # 将从pm2列表中删除所有进程
 
-# Misc
 
-pm2 reset `<process>`    # 重置元数据(重启时间…)
-pm2 updatePM2          # 在内存中更新pm2
-pm2 ping               # 确保pm2守护进程已经启动
-pm2 sendSignal SIGUSR2 my-app # 向脚本发送系统信号
-pm2 start app.js --no-daemon
-pm2 start app.js --no-vizion
-pm2 start app.js --no-autorestart
+# :tv::tv: 如果这个项目帮助了你的话，也希望您能给我一份动力
+
+
+<img src="/assets/微信支付.png"  width="200" alt="..." />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<img src="/assets/支付宝支付.jpg"  width="200" alt="..." />
