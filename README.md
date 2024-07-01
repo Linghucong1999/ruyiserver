@@ -51,10 +51,9 @@ pm2 delete 0           # 将进程从pm2列表中删除
 pm2 delete all         # 将从pm2列表中删除所有进程
 
 
-# :tv::tv: 如果这个项目帮助了你的话，也希望您能给我一份动力
+# :tv::tv: 感谢各位老爷的赏脸
 
 
 <img src="/assets/微信支付.png"  width="200" alt="..." />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 <img src="/assets/支付宝支付.jpg"  width="200" alt="..." />
